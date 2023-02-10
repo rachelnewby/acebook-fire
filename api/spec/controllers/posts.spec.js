@@ -10,7 +10,7 @@ let token;
 
 describe("/posts", () => {
   beforeAll( async () => {
-    const user = new User({email: "test@test.com", password: "12345678"});
+    const user = new User({firstName: "Billy", surname: "Bob", email: "test@test.com", password: "12345678"});
     await user.save();
 
     token = JWT.sign({
@@ -157,4 +157,5 @@ describe("/posts", () => {
       expect(response.body.token).toEqual(undefined);
     })
   })
+
 });
