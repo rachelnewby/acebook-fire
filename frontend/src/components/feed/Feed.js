@@ -35,12 +35,11 @@ const Feed = ({ navigate }) => {
     if(token) {
       return(
 
-        <>
+        <div className='feed'>
           <h2 className='h2'>Posts</h2>
-            <button className='deleteButton' onClick={() => setForm(!form) }>Add Post</button>
+            <button className='add-post-Button' onClick={() => setForm(!form) }>Add Post</button>
                       {form && <PostForm />}
-            <button className='deleteButton' onClick={logout}>
-
+            <button className='logoutButton' onClick={logout}>
               Logout
             </button>
           <div id='feed' role="feed">
@@ -48,7 +47,7 @@ const Feed = ({ navigate }) => {
                 (post) => ( <Post setPosts={ setPosts } post={ post } key={ post._id } /> )
               )}
           </div>
-        </>
+        </div>
       )
     } else {
       navigate('/login')

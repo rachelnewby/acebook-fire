@@ -1,9 +1,19 @@
-.deleteButton{
-    width: 100px;
-    font-size: 16px;
-    line-height: 30px;
-    padding: 3px 8px;
-    border-radius: 30%;
+.feed {
+    flex: 1;
+    padding: 30px 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoutButton{
+    Position: Absolute;
+    Right: 56px;
+    Bottom: 20px;
+    Width: 211px;
+    border-radius: 75%;
+
 }
 
 .btn:hover {

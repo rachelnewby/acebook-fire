@@ -10,7 +10,7 @@ describe('DeleteButtonPost', () => {
 
     cy.get('button').click();
 
-   
+  
 
     cy.wrap(setIsDeleted)
       .should('be.calledWith', true);
