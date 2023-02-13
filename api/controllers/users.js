@@ -13,6 +13,16 @@ const UsersController = {
       }
     });
   },
+  Info: (req, res) => {
+    User.findOne({ email: req.body.email }, async (err, user) => {
+      if (err) {
+        throw err;
+      }
+      const token = await TokenGenerator.jsonwebtoken(req.user_id)
+      res.status(200).json({ name: user.firstName, surname: user.surname, token: token });
+    });
+  },
+  
 };
 
 module.exports = UsersController;

@@ -10,6 +10,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import ProfilePage from '../profile/Profile';
 
 const App = () => {
   const [token, setToken] = useState(window.localStorage.getItem("token"));
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/posts'  element={<Feed navigate={ useNavigate() }/>}/>
           <Route path='/login'  element={<LoginForm  navigate={ useNavigate() } assignToken={ setToken }/>}/>
           <Route path='/signup' element={<SignUpForm navigate={ useNavigate() } />}/>
+          <Route path='/profile' element={<ProfilePage navigate={ useNavigate() } />}/>
         </Routes>
       </>
     );
