@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 const PostForm = ({post}) => {  
-    console.log(window.localStorage)
+    // console.log(window.localStorage)
     const[newPost, setNewPost] = useState("")
 
     const handleSubmit = async (event) => {
-        // event.preventDefault();
+        event.preventDefault();
         const token = window.localStorage.getItem("token") //every event that will be handled by LOGGED IN user has to have this bit, its about JWT
         let response = await fetch( '/posts', {
           method: 'post',
@@ -13,7 +13,7 @@ const PostForm = ({post}) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` // This is the token header
           },
-          body: JSON.stringify({ message: newPost })
+          body: JSON.stringify({ content: newPost })
         })
     
         if(response.status !== 201) {

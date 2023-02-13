@@ -17,7 +17,7 @@ const Post = ({post}) => {
     <div>{console.log("post was deleted :)")}</div>
   ) : (
     <div className="post">
-      <article data-cy="post" key={ post._id }>{ post.message }</article>
+      <article data-cy="post" key={ post._id }>{ post.content }</article>
       <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
       <EditButton post={post} setIsEditing={updatePost}  />
     </div>
