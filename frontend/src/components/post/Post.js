@@ -22,6 +22,7 @@ const Post = ({post}) => {
   ) : (
     <div className="post">
       <article data-cy="post" key={ post._id }>{ updatedPost.content }</article>
+
       <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
       <EditButton post={post} onUpdate={!isEditing}/>
     </div>

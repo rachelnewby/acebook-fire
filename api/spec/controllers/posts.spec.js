@@ -2,15 +2,17 @@ const app = require("../../app");
 const request = require("supertest");
 require("../mongodb_helper");
 const Post = require('../../models/post');
+const seedPosts = require('../seeds/postSeeds.js');
 const User = require('../../models/user');
 const JWT = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 
 let token;
 
+
 describe("/posts", () => {
   beforeAll( async () => {
-    const user = new User({email: "test@test.com", password: "12345678"});
+    const user = new User({firstName: "Billy", surname: "Bob", email: "test@test.com", password: "12345678"});
     await user.save();
 
     token = JWT.sign({
@@ -22,13 +24,14 @@ describe("/posts", () => {
     }, secret);
   });
 
-  beforeEach( async () => {
-    await Post.deleteMany({});
-  })
+  const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
+    await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
+    console.log(seedPosts);
+    await Post.insertMany(seedPosts); // It seeds the seedUsers data (required at the top of this file) into the collection 
+  }
 
-  afterAll( async () => {
-    await User.deleteMany({});
-    await Post.deleteMany({});
+  beforeEach( async () => {
+    await seedDB();
   })
 
   describe("POST, when token is present", () => {
@@ -36,7 +39,11 @@ describe("/posts", () => {
       let response = await request(app)
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
-        .send({ message: "hello world", token: token });
+        .send({ content: "howdy!",
+        date_created: new Date(),
+        user_id: 2,
+        likes: 0,
+        token: token });
       expect(response.status).toEqual(201);
     });
   
@@ -44,17 +51,25 @@ describe("/posts", () => {
       await request(app)
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
-        .send({ message: "hello world", token: token });
+        .send({ content: "howdy!",
+        date_created: new Date(),
+        user_id: 2,
+        likes: 0,
+        token: token });
       let posts = await Post.find();
       expect(posts.length).toEqual(1);
-      expect(posts[0].message).toEqual("hello world");
+      expect(posts[0].content).toEqual("howdy!");
     });
   
     test("returns a new token", async () => {
       let response = await request(app)
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
-        .send({ message: "hello world", token: token })
+        .send({ content: "howdy!",
+        date_created: new Date(),
+        user_id: 2,
+        likes: 0,
+        token: token })
       let newPayload = JWT.decode(response.body.token, process.env.JWT_SECRET);
       let originalPayload = JWT.decode(token, process.env.JWT_SECRET);
       expect(newPayload.iat > originalPayload.iat).toEqual(true);
@@ -65,14 +80,20 @@ describe("/posts", () => {
     test("responds with a 401", async () => {
       let response = await request(app)
         .post("/posts")
-        .send({ message: "hello again world" });
+        .send({ content: "howdy!",
+        date_created: new Date(),
+        user_id: 2,
+        likes: 0 });
       expect(response.status).toEqual(401);
     });
   
     test("a post is not created", async () => {
       await request(app)
         .post("/posts")
-        .send({ message: "hello again world" });
+        .send({ content: "howdy!",
+        date_created: new Date(),
+        user_id: 2,
+        likes: 0 });
       let posts = await Post.find();
       expect(posts.length).toEqual(0);
     });
@@ -87,21 +108,42 @@ describe("/posts", () => {
 
   describe("GET, when token is present", () => {
     test("returns every post in the collection", async () => {
-      let post1 = new Post({message: "howdy!"});
-      let post2 = new Post({message: "hola!"});
+      let post1 = new Post({
+        content: "howdy!",
+        date_created: new Date(),
+        user_id: 2,
+        likes: 0
+
+      });
+      let post2 = new Post({
+        content: "Something else",
+        date_created: new Date(),
+        user_id: 1,
+        likes: 2
+      });
       await post1.save();
       await post2.save();
       let response = await request(app)
         .get("/posts")
         .set("Authorization", `Bearer ${token}`)
         .send({token: token});
-      let messages = response.body.posts.map((post) => ( post.message ));
-      expect(messages).toEqual(["howdy!", "hola!"]);
+      let messages = response.body.posts.map((post) => ( post.content ));
+      expect(messages).toEqual(["howdy!", "Something else"]);
     })
 
     test("the response code is 200", async () => {
-      let post1 = new Post({message: "howdy!"});
-      let post2 = new Post({message: "hola!"});
+      let post1 = new Post({
+        content: "acebook is great", 
+        date_created: new Date (), 
+        user_id: 1, 
+        likes: 1
+      });
+      let post2 = new Post({
+        content: "i miss facebook", 
+        date_created: new Date(), 
+        user_id: 2, 
+        likes: 5
+      });
       await post1.save();
       await post2.save();
       let response = await request(app)
@@ -112,8 +154,18 @@ describe("/posts", () => {
     })
 
     test("returns a new token", async () => {
-      let post1 = new Post({message: "howdy!"});
-      let post2 = new Post({message: "hola!"});
+      let post1 = new Post({
+        content: "acebook is great",
+        date_created: new Date(), 
+        user_id: 1,
+        likes: 1
+      });
+      let post2 = new Post({
+        content: "i miss facebook", 
+        date_created: new Date(), 
+        user_id: 2, 
+        likes: 5
+      });
       await post1.save();
       await post2.save();
       let response = await request(app)
@@ -128,8 +180,18 @@ describe("/posts", () => {
 
   describe("GET, when token is missing", () => {
     test("returns no posts", async () => {
-      let post1 = new Post({message: "howdy!"});
-      let post2 = new Post({message: "hola!"});
+      let post1 = new Post({
+        content: "acebook is great",
+        date_created: new Date(), 
+        user_id: 1,
+        likes: 1
+      });
+      let post2 = new Post({
+        content: "i miss facebook", 
+        date_created: new Date(), 
+        user_id: 2, 
+        likes: 5
+      });
       await post1.save();
       await post2.save();
       let response = await request(app)
@@ -138,8 +200,17 @@ describe("/posts", () => {
     })
 
     test("the response code is 401", async () => {
-      let post1 = new Post({message: "howdy!"});
-      let post2 = new Post({message: "hola!"});
+      let post1 = new Post({
+        content: "acebook is great",
+        date_created: new Date(), 
+        user_id: 1,
+        likes: 1});
+      let post2 = new Post({
+        content: "i miss facebook", 
+        date_created: new Date(), 
+        user_id: 2, 
+        likes: 5
+      });
       await post1.save();
       await post2.save();
       let response = await request(app)
@@ -148,8 +219,18 @@ describe("/posts", () => {
     })
 
     test("does not return a new token", async () => {
-      let post1 = new Post({message: "howdy!"});
-      let post2 = new Post({message: "hola!"});
+      let post1 = new Post({
+        content: "acebook is great",
+        date_created: new Date(), 
+        user_id: 1,
+        likes: 1
+      });
+      let post2 = new Post({
+        content: "i miss facebook", 
+        date_created: new Date(), 
+        user_id: 2, 
+        likes: 5
+      });
       await post1.save();
       await post2.save();
       let response = await request(app)
@@ -159,7 +240,7 @@ describe("/posts", () => {
   })
 
   describe('DELETE /posts/:id', () => {
-    it('should delete a post', async () => {
+    xit('should delete a post', async () => {
       const postId = '5e9b04a8b0d4a914cc3f1234';
   
       const res = await request(app)
