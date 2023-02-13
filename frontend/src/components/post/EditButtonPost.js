@@ -15,12 +15,14 @@ const EditButton = ({post, onUpdate}) => {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          message: newMessage,
-        }),
+        body: JSON.stringify({ 
+          content: newMessage,
+          likes: 0,
+          user_id: token.user_id,
+          date_created: new Date()
+        })
       });
       setIsEditing(false)
-      onUpdate()
     } catch (error) {
       console.log(error)
     }

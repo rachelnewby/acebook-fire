@@ -13,7 +13,12 @@ const PostForm = ({post}) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` // This is the token header
           },
-          body: JSON.stringify({ message: newPost })
+          body: JSON.stringify({ 
+            content: newPost,
+            likes: 0,
+            user_id: token.user_id,
+            date_created: new Date()
+          })
         })
     
         if(response.status !== 201) {
