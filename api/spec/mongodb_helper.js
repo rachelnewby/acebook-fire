@@ -1,5 +1,9 @@
 var mongoose = require("mongoose");
 
+const Post = require('../models/post.js');
+const seedPosts = require('./seeds/postSeeds.js');
+
+
 beforeAll(function (done) {
   mongoose.connect("mongodb://0.0.0.0/acebook_test", {
     useNewUrlParser: true,
@@ -12,6 +16,11 @@ beforeAll(function (done) {
     done();
   });
 });
+
+const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
+  await Post.deleteMany({});
+  await Post.insertMany(seedPosts);
+}
 
 afterAll(function (done) {
   mongoose.connection.close(true, function () {
