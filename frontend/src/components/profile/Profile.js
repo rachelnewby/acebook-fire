@@ -1,7 +1,8 @@
 import React from 'react';
 import './Profile.css';
 import  { useState, useEffect } from 'react';
-import Post from '../post/Post';
+
+
 
 
 
@@ -11,6 +12,7 @@ import Post from '../post/Post';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({});
+  const [post, setPost] = useState({})
   const token = window.localStorage.getItem("token")
  
   useEffect(() => {
@@ -31,6 +33,7 @@ const ProfilePage = () => {
    }
     
   }, []);
+  
   if (token) {
     fetch('/posts', {
       method: 'get',
@@ -41,6 +44,8 @@ const ProfilePage = () => {
     .then(response => response.json())
     .then(post => {
       console.log(post)
+      window.localStorage.setItem("token", post.token)
+      setPost(post.posts)
     })
   }
 
@@ -60,7 +65,8 @@ const ProfilePage = () => {
       <div className='friend-list'></div>
       <div className='own-posts'>
       <h1>Posts:</h1>
-          
+      
+        
       </div>
     </div>
   );
