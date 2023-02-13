@@ -123,9 +123,7 @@ describe("/users", () => {
         .get("/users") 
         .set("Authorization", `Bearer ${token}`)
         .send({token: token});
-      console.log(response.body)
       let acebookUsers = response.body.users.map((user) => (user.firstName));
-      console.log(acebookUsers)
       expect(acebookUsers.length).toEqual(6)
     })
   })
