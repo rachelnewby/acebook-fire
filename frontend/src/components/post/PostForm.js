@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const PostForm = ({post}) => {  
-    // console.log(window.localStorage)
     const[newPost, setNewPost] = useState("")
 
     const handleSubmit = async (event) => {
@@ -13,7 +12,14 @@ const PostForm = ({post}) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` // This is the token header
           },
-          body: JSON.stringify({ content: newPost })
+
+          body: JSON.stringify({ 
+            content: newPost,
+            likes: 0,
+            user_id: token.user_id,
+            date_created: new Date()
+          })
+
         })
     
         if(response.status !== 201) {
