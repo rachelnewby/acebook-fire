@@ -7,7 +7,6 @@ const DeleteButtonPost = ({post, id, setIsDeleted}) => {
 
 
   const handleClick = async () => {
-    console.log(post)
     try {
       await fetch(`/posts/${post._id}`, {
         method: 'delete',

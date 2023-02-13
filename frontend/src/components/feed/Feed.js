@@ -27,10 +27,6 @@ const Feed = ({ navigate }) => {
   }, [])
     
 
-  const logout = () => {
-    window.localStorage.removeItem("token")
-    navigate('/login')
-  }
   
     if(token) {
       return(
@@ -39,9 +35,6 @@ const Feed = ({ navigate }) => {
           <h2 className='h2'>Posts</h2>
             <button className='add-post-Button' onClick={() => setForm(!form) }>Add Post</button>
                       {form && <PostForm />}
-            <button className='logoutButton' onClick={logout}>
-              Logout
-            </button>
           <div id='feed' role="feed">
               {posts.map(
                 (post) => ( <Post setPosts={ setPosts } post={ post } key={ post._id } /> )
