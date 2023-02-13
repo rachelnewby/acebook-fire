@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const TokenGenerator = require("../models/token_generator");
+
 
 const UsersController = {
   Create: (req, res) => {
@@ -14,14 +16,18 @@ const UsersController = {
     });
   },
   Info: (req, res) => {
-    User.findOne({ email: req.body.email }, async (err, user) => {
+    User.findOne({ user: req.body.email }, (err, user) => {
       if (err) {
-        throw err;
+        res.status(500).json({ message: 'Internal Server Error' });
       }
-      const token = await TokenGenerator.jsonwebtoken(req.user_id)
-      res.status(200).json({ name: user.firstName, surname: user.surname, token: token });
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+      } else {
+        res.status(200).json({ email: user.email });
+      }
     });
-  },
+  }
+  
   
 };
 

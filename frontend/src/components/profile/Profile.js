@@ -1,6 +1,10 @@
 import React from 'react';
 import './Profile.css';
 import  { useState, useEffect } from 'react';
+import Post from '../post/Post';
+
+
+
 //import friends once it's merged 
 
 
@@ -10,25 +14,53 @@ const ProfilePage = () => {
   const token = window.localStorage.getItem("token")
  
   useEffect(() => {
-    fetch('/profile', {
-      method: 'POST',
+    if (token) {
+    fetch('/users/profile', {
+      method: 'get',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ email: 'some@email.com' })
+      }
     })
-      .then(res => res.json())
-      .then(data => setUser(data))
-      .catch(error => console.error(error));
+    .then(response => response.json())
+    .then(user => {
+      console.log(user)
+      //window.localStorage.setItem("token", data.token)
+      setUser(user)
+     // console.log(user)
+    })
+   }
+    
   }, []);
+  if (token) {
+    fetch('/posts', {
+      method: 'get',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => response.json())
+    .then(post => {
+      console.log(post)
+    })
+  }
+
+  
 
   return (
     <div className='profile-container'>
       <h1>Profile Page</h1>
       <div className='user-info'>
-        <p>Name: {user.name}</p>
+        <p>Email: {user.email}</p>
+        <p>Name: {user.firstName}</p>
         <p>Surname: {user.surname}</p>
+        <p>Bio: {user.bio}</p>
+        </div>
+
+        
+      <div className='friend-list'></div>
+      <div className='own-posts'>
+      <h1>Posts:</h1>
+          
       </div>
     </div>
   );
