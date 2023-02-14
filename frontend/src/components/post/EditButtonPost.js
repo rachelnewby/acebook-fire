@@ -17,7 +17,7 @@ const EditButton = ({post, onUpdate}) => {
         },
         body: JSON.stringify({ 
           content: newMessage,
-          likes: 0,
+          likes: post.likes,
           user_id: token.user_id,
           date_created: new Date()
         })

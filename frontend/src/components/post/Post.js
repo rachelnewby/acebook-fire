@@ -26,7 +26,7 @@ const Post = ({post}) => {
 
       <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
       <EditButton post={post} onUpdate={!isEditing}/>
-      <LikeButton />
+      <LikeButton post={post} />
     </div>
   );
 };

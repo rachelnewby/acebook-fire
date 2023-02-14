@@ -1,4 +1,4 @@
-.feed {
+feed {
     flex: 1;
     padding: 30px 150px;
     display: flex;
@@ -30,3 +30,4 @@
     color: blue;
     background-color: aqua;
 }
+
