@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PostForm.css'
+import { FiSend } from 'react-icons/fi';
 
 const PostForm = ({post}) => {  
     const[newPost, setNewPost] = useState("")
@@ -40,15 +41,22 @@ const PostForm = ({post}) => {
       }
 
   return(
-    <form className='post-form' onSubmit={handleSubmit}> 
-        <input
-            className='post-input'
-            placeholder='Add new post' 
-            id="post" type='text'
-            value={newPost}
-            onChange={handlePostInputChange} // we are invoking the function that keeps track of what is inside the input
+    <form className='new-post__form' onSubmit={handleSubmit}> 
+        <textarea
+          type='textarea'
+          name='textarea'
+          className='new-post__input'
+          placeholder='Add new post' 
+          id="post" 
+          value={newPost}
+          onChange={handlePostInputChange} // we are invoking the function that keeps track of what is inside the input
         />
-        <button className='post-submit' type='submit'>create post</button>
+        <button
+          className='new-post__button'
+          type='submit'
+        >
+          <FiSend className='send-post__icon'/>
+        </button>
     </form>
   )
   }

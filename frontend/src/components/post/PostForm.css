@@ -1,14 +1,48 @@
-.post-form{
-  margin: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+.new-post__form{
+  position: relative;
+  display: inline-block;
 }
 
-.post-input{
-
+.new-post__input{
+  border-radius: 10px;
+  width: 70%;
+  min-height: 50%;
+  font-size: 16px;
+  padding: 0.7rem 2rem;
+  padding-right: 50px;
+  border: 2px solid var(--color-raisin-black);
+  resize: vertical;
+  width: 500px;
 }
 
-.post-submit{
+.new-post__input:focus{
+  outline: none;
+}
 
+.new-post__button{
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translateY(-50%);
+  width: 3.4rem;
+  height: 3.4rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* .new-post__button{
+  width:4rem;
+  height: 4rem;
+} */
+
+.send-post__icon{
+  width: 100%;
+  font-size: 30px;
+  transition: all 0.2s;
+}
+
+.send-post__icon:hover{
+  font-size: 40px;
 }

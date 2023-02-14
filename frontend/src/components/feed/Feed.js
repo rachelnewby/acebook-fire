@@ -33,8 +33,8 @@ const Feed = ({ navigate }) => {
         <h2 className='post-title'>Posts</h2>
 
         <div className='add-post-container'>
-          <button className='custom-btn btn' onClick={() => setForm(!form) }>Add Post</button>
-          {form && <PostForm />}
+          {/* <button className='custom-btn btn' onClick={() => setForm(!form) }>Add Post</button> */}
+          <PostForm />
         </div>
 
         <div id='feed' role="feed">

@@ -20,7 +20,6 @@ const LikeButton = ({post}) => {
   return( 
     <div>
       <button onClick={handleClick} className='like-button'><MdThumbUpOffAlt /></button>   
-      <p>{post.likes.length}</p>
     </div>
   )
 }
