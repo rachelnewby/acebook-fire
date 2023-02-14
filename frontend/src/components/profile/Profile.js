@@ -1,6 +1,7 @@
 import React from 'react';
 import './Profile.css';
 import  { useState, useEffect } from 'react';
+import Post from '../post/Post';
 
 
 
@@ -12,8 +13,9 @@ import  { useState, useEffect } from 'react';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({});
-  const [post, setPost] = useState({})
-  const token = window.localStorage.getItem("token")
+  const [posts, setPosts] = useState([])
+  
+  const [token, setToken] = useState(window.localStorage.getItem("token"));
  
   useEffect(() => {
     if (token) {
@@ -25,29 +27,29 @@ const ProfilePage = () => {
     })
     .then(response => response.json())
     .then(user => {
-      console.log(user)
+     
       //window.localStorage.setItem("token", data.token)
       setUser(user)
      // console.log(user)
     })
    }
-    
-  }, []);
-  
-  if (token) {
-    fetch('/posts', {
-      method: 'get',
+   if(token) {
+    fetch("/posts", {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
-    .then(response => response.json())
-    .then(post => {
-      console.log(post)
-      window.localStorage.setItem("token", post.token)
-      setPost(post.posts)
-    })
+      .then(response => response.json())
+      .then(async data => {
+        window.localStorage.setItem("token", data.token)
+        setToken(window.localStorage.getItem("token"))
+        setPosts(data.posts);
+        console.log(posts);
+      })
   }
+}, []);
+  
+  
 
   
 
@@ -60,12 +62,17 @@ const ProfilePage = () => {
         <p>Surname: {user.surname}</p>
         <p>Bio: {user.bio}</p>
         </div>
-
+        <div className='friend-list'>
+          <h1>Friends </h1>
+          <p>{/*user.friendsList*/}</p> 
+        </div>
         
-      <div className='friend-list'></div>
       <div className='own-posts'>
-      <h1>Posts:</h1>
+      <h1>Posts</h1>
       
+      <p>{posts.map(
+              (post) => ( <Post post={ post } key={ post._id } /> )
+            )}</p>
         
       </div>
     </div>

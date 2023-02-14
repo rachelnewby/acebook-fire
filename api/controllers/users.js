@@ -26,7 +26,18 @@ const UsersController = {
         res.status(200).json({ email: user.email });
       }
     });
+  },
+  Index: (req, res) => {
+    User.find({}, async (err, users) => {
+      if (err) {
+        console.log('if error')
+        return res.status(400).json({error: err})
+      }
+      const token = await TokenGenerator.jsonwebtoken(req.user_id) // Added await
+      res.status(200).json({ users: users, token: token });
+    });
   }
+
   
   
 };
