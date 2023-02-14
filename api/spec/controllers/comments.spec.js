@@ -16,7 +16,7 @@ describe("/comments", () => {
         const user = new User({firstName: "Billy", surname: "Bob", email: "test@test.com", password: "12345678"});
         const post = new Post({content: "acebook is great",
         date_created: new Date('<2010-03-12>'),
-        user_id: new ObjectId('63ea4c50c5b85f680127153c'),
+        user_id: 1, //new ObjectId('63ea4c50c5b85f680127153c'),
         likes: 1});
         await user.save();
   
