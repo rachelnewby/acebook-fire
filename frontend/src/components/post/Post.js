@@ -19,14 +19,20 @@ const Post = ({post}) => {
 
 
   return isDeleted ? (
-    <p> </p>
+    <> </>
   ) : (
-    <div className="post">
-      <article data-cy="post" key={ post._id }>{ updatedPost.content }</article>
+    <div className="post-container">
+      <div className='post-header'>
+        <div className='post-name'>Name Here</div>
+        <div className='post-date'>12/04/2022</div>
+      </div>
+      <article data-cy="post" className='post-content' key={ post._id }>{ updatedPost.content }</article>
 
-      <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
-      <EditButton post={post} onUpdate={!isEditing}/>
-      <LikeButton post={post} />
+      <div className='post-footer'>
+        <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
+        <EditButton post={post} onUpdate={!isEditing}/>
+        <LikeButton post={post} />
+      </div>
     </div>
   );
 };

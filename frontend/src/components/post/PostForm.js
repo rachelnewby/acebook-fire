@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import './PostForm.css'
 
 const PostForm = ({post}) => {  
     const[newPost, setNewPost] = useState("")
-
+ 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const token = window.localStorage.getItem("token") //every event that will be handled by LOGGED IN user has to have this bit, its about JWT
@@ -39,18 +40,16 @@ const PostForm = ({post}) => {
       }
 
   return(
-
-    <div>
-        <form onSubmit={handleSubmit}> 
-            <input 
-                placeholder='Add new post' 
-                id="post" type='text'
-                value={newPost}
-                onChange={handlePostInputChange} // we are invoking the function that keeps track of what is inside the input
-            />
-            <button type='submit'>create post</button>
-        </form>
-    </div>
+    <form className='post-form' onSubmit={handleSubmit}> 
+        <input
+            className='post-input'
+            placeholder='Add new post' 
+            id="post" type='text'
+            value={newPost}
+            onChange={handlePostInputChange} // we are invoking the function that keeps track of what is inside the input
+        />
+        <button className='post-submit' type='submit'>create post</button>
+    </form>
   )
   }
 

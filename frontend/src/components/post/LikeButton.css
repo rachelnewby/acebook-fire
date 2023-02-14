@@ -2,9 +2,20 @@
   box-shadow: none;
   cursor: pointer;
   background-color: transparent;
+  font-size: 30px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.like-button--liked{
+  background-color: #1778f2;
+  color: white;
 }
 
 .like-button:hover {
-  background-color: blue;
-  font-size: 16px;
+  
 }
