@@ -17,8 +17,8 @@ const PostsController = {
     const post = new Post({
       content: req.body.content,
       likes: 0,
-      user_id: req.user_id,
-      date_created: new Date()
+      userID: req.user_id,
+      dateCreated: new Date()
     });
     post.save(async (err) => {
       if (err) {
