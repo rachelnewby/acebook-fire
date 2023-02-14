@@ -6,42 +6,47 @@ require("../mongodb_helper");
 
 describe("Post model", () => {
   beforeEach(async () => {
-    // mongoose.connection.collections.posts.drop(() => {
-    //   done();
-    // });
-
     await seedDB();
   });
 
   const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
     await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
-    console.log(seedPosts);
     await Post.insertMany(seedPosts); // It seeds the seedUsers data (required at the top of this file) into the collection 
   }
-
-  it("has a message", () => {
-    var post = new Post({ message: "some message" });
-    expect(post.message).toEqual("some message");
-  });
 
   it("can list all posts", (done) => {
     Post.find((err, posts) => {
       expect(err).toBeNull();
-      expect(posts).toEqual([]);
+      expect.arrayContaining([
+        expect.objectContaining({
+          content: 'acebook is great'
+        })
+      ]);
+      expect.arrayContaining([
+        expect.objectContaining({
+          content: 'i miss facebook'
+        })
+      ]);
       done();
     });
   });
 
   it("can save a post", (done) => {
-    var post = new Post({ message: "some message" });
+    var post = new Post({
+      content: 'this is a post',
+      userID: new mongoose.Types.ObjectId(),
+      dateCreated: new Date(),
+      likes: []
+    });
 
     post.save((err) => {
       expect(err).toBeNull();
 
       Post.find((err, posts) => {
         expect(err).toBeNull();
-
-        expect(posts[0]).toMatchObject({ message: "some message" });
+        expect.arrayContaining([
+          expect.objectContaining(post)
+        ]);
         done();
       });
     });

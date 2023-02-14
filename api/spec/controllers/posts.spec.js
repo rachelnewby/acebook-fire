@@ -12,7 +12,7 @@ let token;
 
 describe("/posts", () => {
   beforeAll( async () => {
-    const user = new User({firstName: "Billy", surname: "Bob", email: "test@test.com", password: "12345678"});
+    const user = new User({firstName: "Billy", lastName: "Bob", email: "test@test.com", password: "12345678"});
     await user.save();
 
     token = JWT.sign({
@@ -26,7 +26,6 @@ describe("/posts", () => {
 
   const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
     await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
-    console.log(seedPosts);
     await Post.insertMany(seedPosts); // It seeds the seedUsers data (required at the top of this file) into the collection 
   }
 
@@ -40,9 +39,9 @@ describe("/posts", () => {
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
         .send({ content: "howdy!",
-        date_created: new Date(),
+        dateCreated: new Date(),
         user_id: 2,
-        likes: 0,
+        likes: [],
         token: token });
       expect(response.status).toEqual(201);
     });
@@ -54,7 +53,7 @@ describe("/posts", () => {
         .send({ content: "howdy!",
         date_created: new Date(),
         user_id: 2,
-        likes: 0,
+        likes: [],
         token: token });
       let posts = await Post.find();
       expect(posts.length).toEqual(1);
@@ -68,7 +67,7 @@ describe("/posts", () => {
         .send({ content: "howdy!",
         date_created: new Date(),
         user_id: 2,
-        likes: 0,
+        likes: [],
         token: token })
       let newPayload = JWT.decode(response.body.token, process.env.JWT_SECRET);
       let originalPayload = JWT.decode(token, process.env.JWT_SECRET);
@@ -83,7 +82,7 @@ describe("/posts", () => {
         .send({ content: "howdy!",
         date_created: new Date(),
         user_id: 2,
-        likes: 0 });
+        likes: [] });
       expect(response.status).toEqual(401);
     });
   
@@ -93,7 +92,7 @@ describe("/posts", () => {
         .send({ content: "howdy!",
         date_created: new Date(),
         user_id: 2,
-        likes: 0 });
+        likes: [] });
       let posts = await Post.find();
       expect(posts.length).toEqual(0);
     });
@@ -112,14 +111,14 @@ describe("/posts", () => {
         content: "howdy!",
         date_created: new Date(),
         user_id: 2,
-        likes: 0
+        likes: []
 
       });
       let post2 = new Post({
         content: "Something else",
         date_created: new Date(),
         user_id: 1,
-        likes: 2
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -136,13 +135,13 @@ describe("/posts", () => {
         content: "acebook is great", 
         date_created: new Date (), 
         user_id: 1, 
-        likes: 1
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
         user_id: 2, 
-        likes: 5
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -158,13 +157,13 @@ describe("/posts", () => {
         content: "acebook is great",
         date_created: new Date(), 
         user_id: 1,
-        likes: 1
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
         user_id: 2, 
-        likes: 5
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -184,13 +183,13 @@ describe("/posts", () => {
         content: "acebook is great",
         date_created: new Date(), 
         user_id: 1,
-        likes: 1
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
         user_id: 2, 
-        likes: 5
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -204,12 +203,12 @@ describe("/posts", () => {
         content: "acebook is great",
         date_created: new Date(), 
         user_id: 1,
-        likes: 1});
+        likes: []});
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
         user_id: 2, 
-        likes: 5
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -223,13 +222,13 @@ describe("/posts", () => {
         content: "acebook is great",
         date_created: new Date(), 
         user_id: 1,
-        likes: 1
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
         user_id: 2, 
-        likes: 5
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -250,4 +249,23 @@ describe("/posts", () => {
       expect(res.body).toEqual({ message: 'Post deleted successfully' });
     });
   });
+
+  describe ('POST /like', () => {
+    it ('should add the users id to the likes array of the post being liked', async () => {
+      const post = new Post({
+        content: 'this is a test post',
+        userID: new ObjectId('123'),
+        likes: [],
+        dateCreated: new Date()
+      })
+      console.log("++++++++++++++++++++++++++++");
+      console.log(post._id);
+
+      // await request(app)
+      //   .post("/like")
+      //   .set("Authorization", `Bearer ${token}`)
+      //   .send({postID: });
+
+    })
+  })
 });

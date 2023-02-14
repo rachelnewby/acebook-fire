@@ -12,11 +12,18 @@ const PostsController = {
       res.status(200).json({ posts: posts, token: token });
     });
   },
+  Like: (req, res) => {
+    // req.body should contain the id of the post and the id of the user liking it
+    // if all okay respond with 200 etc
+    // add user.id to the array of likes in the post
+
+    
+  },
   Create: (req, res) => {
     console.log(req.user_id);
     const post = new Post({
       content: req.body.content,
-      likes: 0,
+      likes: [],
       userID: req.user_id,
       dateCreated: new Date()
     });
