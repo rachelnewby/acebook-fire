@@ -6,6 +6,7 @@ const seedPosts = require('../seeds/postSeeds.js');
 const User = require('../../models/user');
 const JWT = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
+var mongoose = require("mongoose");
 
 let token;
 
@@ -254,18 +255,21 @@ describe("/posts", () => {
     it ('should add the users id to the likes array of the post being liked', async () => {
       const post = new Post({
         content: 'this is a test post',
-        userID: new ObjectId('123'),
+        userID: new mongoose.Types.ObjectId(),
         likes: [],
         dateCreated: new Date()
       })
-      console.log("++++++++++++++++++++++++++++");
+
       console.log(post._id);
+      const personWhoLikes = new mongoose.Types.ObjectId()
 
-      // await request(app)
-      //   .post("/like")
-      //   .set("Authorization", `Bearer ${token}`)
-      //   .send({postID: });
+      await request(app)
+        .post("/posts/like")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ post_id: post._id, user_id: personWhoLikes });
 
+      console.log(post);
+      expect(post.likes).toEqual([personWhoLikes]);
     })
   })
 });

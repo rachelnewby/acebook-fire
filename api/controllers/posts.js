@@ -12,12 +12,26 @@ const PostsController = {
       res.status(200).json({ posts: posts, token: token });
     });
   },
-  Like: (req, res) => {
+  Like: async (req, res) => {
     // req.body should contain the id of the post and the id of the user liking it
     // if all okay respond with 200 etc
     // add user.id to the array of likes in the post
+    const postId = req.body.post_id;
+    const userId = req.user_id;
 
-    
+    const post = await Post.findById(postId);
+    // console.log(req.body);
+    post.likes.push(userId);
+    console.log(post);
+    post.save(async (err) => {
+      if (err) {
+        throw err;
+      }
+
+      const token = await TokenGenerator.jsonwebtoken(req.user_id)
+      res.status(201).json({ message: 'OK', token: token });
+    })
+
   },
   Create: (req, res) => {
     console.log(req.user_id);
