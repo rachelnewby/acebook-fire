@@ -1,3 +1,4 @@
+const { ObjectID } = require("mongodb");
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
@@ -5,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   firstName: { type: String, required: true },
   surname: { type: String, required: true },
-  friendsList: [{type: Number}]
+  friendsList: [{type: 'ObjectId'}]
 });
 
 const User = mongoose.model("User", UserSchema);
