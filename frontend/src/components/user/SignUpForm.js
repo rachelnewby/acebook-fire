@@ -55,7 +55,7 @@ const SignUpForm = ({ navigate }) => {
           <h1>Register</h1>
           <form className="form__inputs" onSubmit={handleSubmit}>
             <div className="form__input">
-              <input name="firstname" id="firstname" type='text' value={ firstName } onChange={handleFirstNameChange} />
+              <input autoFocus name="firstname" id="firstname" type='text' value={ firstName } onChange={handleFirstNameChange} />
               <label htmlFor="firstname">Firstname</label>
             </div>
             <div className="form__input">

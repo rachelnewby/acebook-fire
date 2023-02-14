@@ -67,7 +67,7 @@
     .form__input > input:focus ~ label,
     .form__input > input:valid ~ label {
       transform: translateY(-20px);
-      font-size: 1rem;
+      font-size: 1.4rem;
       color: var(--color-star-command-blue); }
 
 .form__button {
