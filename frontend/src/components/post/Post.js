@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Post.css';
 import DeleteButtonPost from './DeleteButtonPost';
 import EditButton from './EditButtonPost';
+import LikeButton from './LikeButton';
 
 const Post = ({post}) => {
   const [isDeleted, setIsDeleted] = useState(false);
@@ -25,6 +26,7 @@ const Post = ({post}) => {
 
       <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
       <EditButton post={post} onUpdate={!isEditing}/>
+      <LikeButton />
     </div>
   );
 };
