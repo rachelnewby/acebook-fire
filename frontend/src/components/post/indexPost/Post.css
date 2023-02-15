@@ -13,14 +13,21 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .post-name{
   font-weight: 800;
 }
 
+.post-profile-picture{
+  margin-right: 4px;
+  font-size: 30px;
+}
+
 .post-date-time__container{
   text-align: right;
+  margin-left: auto;
 }
 
 .post-date{

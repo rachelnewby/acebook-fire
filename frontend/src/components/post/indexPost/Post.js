@@ -25,10 +25,11 @@ const Post = ({post}) => {
   ) : (
     <div className="post-container">
       <div className='post-header'>
-        <div className='post-name'><FaRegUser />{post.userID.firstName} {post.userID.lastName[0]}</div>
+        <div className='post-profile-picture'><FaRegUser /></div>
+        <div className='post-name'>{post.userID.firstName} {post.userID.lastName[0]}</div>
         <div className='post-date-time__container'>
           <div className='post-date'>{post.dateCreated.slice(0, 9)}</div>
-          <div className="post-time">{post.dateCreated.slice(11, 19)}</div>
+          <div className="post-time">{post.dateCreated.slice(11, 16)}</div>
         </div>
       </div>
       <article data-cy="post" className='post-content' key={ post._id }>{ updatedPost.content }</article>
