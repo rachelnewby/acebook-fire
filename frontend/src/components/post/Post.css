@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 20px;
+  position: relative;
 }
 
 .post-header{
@@ -33,4 +34,16 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.like-button{
+  position: absolute;
+  right: 3%;
+  bottom: 4%;
+  transition: all 0.2s;
+}
+
+.like-button:hover{
+  font-size: 38px;
+  transform: translate(2px, 2px);
 }
