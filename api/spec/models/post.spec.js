@@ -34,8 +34,8 @@ describe("Post model", () => {
   it("can save a post", (done) => {
     var post = new Post({
       content: 'this is a post',
-      userID: new mongoose.Types.ObjectId(),
-      dateCreated: new Date(),
+      user_id: new mongoose.Types.ObjectId(),
+      date_created: new Date(),
       likes: []
     });
 

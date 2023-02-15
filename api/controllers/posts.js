@@ -28,7 +28,6 @@ const PostsController = {
       const token = await TokenGenerator.jsonwebtoken(userId)
       res.status(201).json({ message: 'OK', token: token });
     })
-
   },
   Create: (req, res) => {
     const post = new Post({

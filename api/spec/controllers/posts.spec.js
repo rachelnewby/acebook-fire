@@ -13,7 +13,7 @@ let token;
 
 describe("/posts", () => {
   beforeAll( async () => {
-    const user = new User({firstName: "Billy", lastName: "Bob", email: "test@test.com", password: "12345678"});
+    const user = new User({firstName: "Billy", surname: "Bob", email: "test@test.com", password: "12345678"});
     await user.save();
 
     token = JWT.sign({
@@ -24,6 +24,10 @@ describe("/posts", () => {
       exp: Math.floor(Date.now() / 1000) + (10 * 60)
     }, secret);
   });
+
+  afterAll( async () => {
+    await User.deleteMany({});
+  })
 
   const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
     await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
@@ -53,12 +57,18 @@ describe("/posts", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: 2,
+        user_id: new mongoose.Types.ObjectId(),
         likes: [],
         token: token });
       let posts = await Post.find();
-      expect(posts.length).toEqual(1);
-      expect(posts[0].content).toEqual("howdy!");
+      expect(posts.length).toEqual(6);
+      expect(posts).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            content: "howdy!"
+          })
+        ])
+      );
     });
   
     test("returns a new token", async () => {
@@ -67,7 +77,7 @@ describe("/posts", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: 2,
+        user_id: new mongoose.Types.ObjectId(),
         likes: [],
         token: token })
       let newPayload = JWT.decode(response.body.token, process.env.JWT_SECRET);
@@ -82,7 +92,7 @@ describe("/posts", () => {
         .post("/posts")
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: 2,
+        user_id: new mongoose.Types.ObjectId(),
         likes: [] });
       expect(response.status).toEqual(401);
     });
@@ -92,10 +102,10 @@ describe("/posts", () => {
         .post("/posts")
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: 2,
+        user_id: new mongoose.Types.ObjectId(),
         likes: [] });
       let posts = await Post.find();
-      expect(posts.length).toEqual(0);
+      expect(posts.length).toEqual(5);
     });
   
     test("a token is not returned", async () => {
@@ -108,17 +118,18 @@ describe("/posts", () => {
 
   describe("GET, when token is present", () => {
     test("returns every post in the collection", async () => {
+      await Post.deleteMany({}); // not going to use seeded data for this test
       let post1 = new Post({
         content: "howdy!",
         date_created: new Date(),
-        user_id: 2,
+        user_id: new mongoose.Types.ObjectId(),
         likes: []
 
       });
       let post2 = new Post({
         content: "Something else",
         date_created: new Date(),
-        user_id: 1,
+        user_id: new mongoose.Types.ObjectId(),
         likes: []
       });
       await post1.save();
@@ -135,13 +146,13 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great", 
         date_created: new Date (), 
-        user_id: 1, 
+        user_id: new mongoose.Types.ObjectId(), 
         likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: 2, 
+        user_id: new mongoose.Types.ObjectId(), 
         likes: []
       });
       await post1.save();
@@ -157,13 +168,13 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: 1,
+        user_id: new mongoose.Types.ObjectId(),
         likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: 2, 
+        user_id: new mongoose.Types.ObjectId(), 
         likes: []
       });
       await post1.save();
@@ -183,13 +194,13 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: 1,
+        user_id: new mongoose.Types.ObjectId(),
         likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: 2, 
+        user_id: new mongoose.Types.ObjectId(), 
         likes: []
       });
       await post1.save();
@@ -203,12 +214,12 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: 1,
+        user_id: new mongoose.Types.ObjectId(),
         likes: []});
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: 2, 
+        user_id: new mongoose.Types.ObjectId(), 
         likes: []
       });
       await post1.save();
@@ -222,13 +233,13 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: 1,
+        user_id: new mongoose.Types.ObjectId(),
         likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: 2, 
+        user_id: new mongoose.Types.ObjectId(), 
         likes: []
       });
       await post1.save();
@@ -240,9 +251,8 @@ describe("/posts", () => {
   })
 
   describe('DELETE /posts/:id', () => {
-    xit('should delete a post', async () => {
-      const postId = '5e9b04a8b0d4a914cc3f1234';
-  
+    it('should delete a post', async () => {
+      const postId = '63ed1d2fe1e67a6f929dc599';
       const res = await request(app)
         .delete(`/posts/${postId}`)
         .expect(200);
@@ -255,22 +265,23 @@ describe("/posts", () => {
     it ('should add the users id to the likes array of the post being liked', async () => {
       const post = new Post({
         content: 'this is a test post',
-        userID: new mongoose.Types.ObjectId(),
+        user_id: new mongoose.Types.ObjectId(),
         likes: [],
-        dateCreated: new Date()
+        date_created: new Date()
       })
       await post.save();
 
-      const personWhoLikes = new mongoose.Types.ObjectId()
+      const users = await User.find().limit(1);
+      const personWhoLikes = users[0]; // as we only have 1 user in the test database
 
       await request(app)
         .post("/posts/like")
         .set("Authorization", `Bearer ${token}`)
-        .send({ post_id: post._id, user_id: personWhoLikes });
+        .send({ post_id: post._id});
 
       const updatedPost = await Post.findById(post._id);
       expect(updatedPost.likes).toEqual(
-        expect.arrayContaining([personWhoLikes]),
+        expect.arrayContaining([personWhoLikes._id]),
       );
     })
   })
