@@ -5,7 +5,7 @@ const { post } = require("../routes/posts");
 
 const PostsController = {
   Index: (req, res) => {
-    Post.find().populate({path: "userID", select: "firstName lastName"}).exec(async (err, posts) => {
+    Post.find().populate({path: "user_id", select: "firstname surname"}).exec(async (err, posts) => {
       if (err) {
         throw err;
       }
