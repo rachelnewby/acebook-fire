@@ -23,6 +23,13 @@
 .post-profile-picture{
   margin-right: 4px;
   font-size: 30px;
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .post-date-time__container{
