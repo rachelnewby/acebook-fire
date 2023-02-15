@@ -21,9 +21,7 @@ const DeleteButtonPost = ({post, id, setIsDeleted}) => {
   };
 
   return (
-    <div className="post">
-      <button onClick={handleClick}>delete post</button>
-    </div>
+    <button onClick={handleClick}>delete post</button>
   );
 };
 

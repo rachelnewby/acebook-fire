@@ -40,7 +40,7 @@ const EditButton = ({post, onUpdate}) => {
           <button onClick={handleClick}>Update post</button>
         </div>
       ) : (
-        <p> </p>
+        <> </>
       )}
       <button onClick={() => setIsEditing(!isEditing)}>
         {isEditing ? "Cancel" : "Edit"}
