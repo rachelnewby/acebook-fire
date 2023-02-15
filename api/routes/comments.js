@@ -4,6 +4,6 @@ const router = express.Router();
 
 const CommentsController = require('../controllers/comments');
 
-router.post('/comments', CommentsController.Add);
+router.post('/', CommentsController.Add);
 
 module.exports = router;
