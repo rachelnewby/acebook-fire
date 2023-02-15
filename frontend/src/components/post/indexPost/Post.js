@@ -28,7 +28,7 @@ const Post = ({post}) => {
         <div className='post-profile-picture'><FaRegUser /></div>
         <div className='post-name'>{post.userID.firstName} {post.userID.lastName[0]}</div>
         <div className='post-date-time__container'>
-          <div className='post-date'>{post.dateCreated.slice(0, 9)}</div>
+          <div className='post-date'>{post.dateCreated.slice(0, 10)}</div>
           <div className="post-time">{post.dateCreated.slice(11, 16)}</div>
         </div>
       </div>
