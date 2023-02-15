@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  friendsList: [{type: Number}]
+  friendsList: [{type: Number}] //user id , .populate
 });
 
 const User = mongoose.model("User", UserSchema);

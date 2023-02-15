@@ -17,9 +17,10 @@ describe("/comments", () => {
         const user = new User({firstName: "Billy", lastName: "Bob", email: "test@test.com", password: "12345678"});
         const post = new Post({content: "acebook is great",
         dateCreated: new Date('<2010-03-12>'),
-        userID: new ObjectId('63ea4c50c5b85f680127153c'),
+        userID: user._id, //new ObjectId('63ea4c50c5b85f680127153c'),
         likes: 1});
         await user.save();
+        await post.save();
   
         token = JWT.sign({
             user_id: user.id,
