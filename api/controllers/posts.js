@@ -1,13 +1,16 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 const TokenGenerator = require("../models/token_generator");
 const { post } = require("../routes/posts");
 
 const PostsController = {
   Index: (req, res) => {
-    Post.find(async (err, posts) => {
+    Post.find().populate({path: "userID", select: "firstName lastName"}).exec(async (err, posts) => {
       if (err) {
         throw err;
       }
+
+      console.log(posts);
       const token = await TokenGenerator.jsonwebtoken(req.user_id)
       res.status(200).json({ posts: posts, token: token });
     });
