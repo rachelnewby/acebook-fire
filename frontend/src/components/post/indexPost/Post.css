@@ -27,6 +27,7 @@
   margin-top: 5px;
   min-height: 50px;
   flex-grow: 1;
+  word-break: break-all;
 }
 
 .post-footer{
@@ -34,6 +35,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  min-height: 2rem;
 }
 
 .footer-button{
