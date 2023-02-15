@@ -3,6 +3,7 @@ import './Post.css';
 import DeleteButtonPost from '../deleteButton/DeleteButtonPost';
 import EditButton from '../editButton/EditButtonPost';
 import LikeButton from '../likeButton/LikeButton';
+import { FaRegUser } from 'react-icons/fa';
 
 const Post = ({post}) => {
   const [isDeleted, setIsDeleted] = useState(false);
@@ -17,14 +18,18 @@ const Post = ({post}) => {
     }
   }, [isEditing]);
 
+  console.log(post);
 
   return isDeleted ? (
     <> </>
   ) : (
     <div className="post-container">
       <div className='post-header'>
-        <div className='post-name'>Name Here</div>
-        <div className='post-date'>12/04/2022</div>
+        <div className='post-name'><FaRegUser />{post.userID.firstName} {post.userID.lastName[0]}</div>
+        <div className='post-date-time__container'>
+          <div className='post-date'>{post.dateCreated.slice(0, 9)}</div>
+          <div className="post-time">{post.dateCreated.slice(11, 19)}</div>
+        </div>
       </div>
       <article data-cy="post" className='post-content' key={ post._id }>{ updatedPost.content }</article>
 

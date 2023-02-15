@@ -19,8 +19,18 @@
   font-weight: 800;
 }
 
-.post-date{
+.post-date-time__container{
+  text-align: right;
+}
 
+.post-date{
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.post-time{
+  font-weight: 300;
+  font-size: 12px;
 }
 
 .post-content{
