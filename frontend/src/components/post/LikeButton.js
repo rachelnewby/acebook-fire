@@ -19,7 +19,7 @@ const LikeButton = ({post}) => {
 
   return( 
     <div>
-      <button onClick={handleClick} className='like-button'><MdThumbUpOffAlt /></button>   
+      <button onClick={handleClick} className='footer-button like-button'><MdThumbUpOffAlt /></button>   
     </div>
   )
 }

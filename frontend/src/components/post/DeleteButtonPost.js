@@ -1,4 +1,5 @@
 import React from 'react';
+import { BiTrash } from 'react-icons/bi';
 
 
 
@@ -21,7 +22,7 @@ const DeleteButtonPost = ({post, id, setIsDeleted}) => {
   };
 
   return (
-    <button onClick={handleClick}>delete post</button>
+    <button className="footer-button" onClick={handleClick}><BiTrash /></button>
   );
 };
 

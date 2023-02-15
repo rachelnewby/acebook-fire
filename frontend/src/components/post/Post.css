@@ -36,14 +36,20 @@
   justify-content: center;
 }
 
-.like-button{
-  position: absolute;
-  right: 3%;
-  bottom: 4%;
-  transition: all 0.2s;
+.footer-button{
+  box-shadow: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 30px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
 }
 
-.like-button:hover{
+.footer-button:hover{
   font-size: 38px;
   transform: translate(2px, 2px);
 }

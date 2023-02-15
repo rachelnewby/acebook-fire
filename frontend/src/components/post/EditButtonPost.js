@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { BiEditAlt } from 'react-icons/bi';
+import { MdCancel } from 'react-icons/md';
 
 const EditButton = ({post, onUpdate}) => {
 
@@ -42,8 +44,8 @@ const EditButton = ({post, onUpdate}) => {
       ) : (
         <> </>
       )}
-      <button onClick={() => setIsEditing(!isEditing)}>
-        {isEditing ? "Cancel" : "Edit"}
+      <button className="footer-button" onClick={() => setIsEditing(!isEditing)}>
+        {isEditing ? <MdCancel /> : <BiEditAlt />}
       </button>
     </div>
   );
