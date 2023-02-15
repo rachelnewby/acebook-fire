@@ -18,7 +18,7 @@ const SignUpForm = ({ navigate }) => {
       body: JSON.stringify({
         email: email, 
         password: password,
-        firstname: firstName,
+        firstName: firstName,
         surname: lastName
        })
     })
