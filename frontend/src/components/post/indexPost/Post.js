@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Post.css';
-import DeleteButtonPost from './DeleteButtonPost';
-import EditButton from './EditButtonPost';
-import LikeButton from './LikeButton';
+import DeleteButtonPost from '../deleteButton/DeleteButtonPost';
+import EditButton from '../editButton/EditButtonPost';
+import LikeButton from '../likeButton/LikeButton';
 
 const Post = ({post}) => {
   const [isDeleted, setIsDeleted] = useState(false);

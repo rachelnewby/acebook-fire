@@ -1,6 +1,6 @@
 import React from 'react';
 import { BiTrash } from 'react-icons/bi';
-
+import './DeleteButtonPost.css'
 
 
 const DeleteButtonPost = ({post, id, setIsDeleted}) => {
@@ -22,7 +22,7 @@ const DeleteButtonPost = ({post, id, setIsDeleted}) => {
   };
 
   return (
-    <button className="footer-button" onClick={handleClick}><BiTrash /></button>
+    <button className="footer-button delete-button" onClick={handleClick}><BiTrash /></button>
   );
 };
 

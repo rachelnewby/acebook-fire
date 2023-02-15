@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import Post from '../post/Post'
+import Post from '../post/indexPost/Post'
 import './Feed.css';
 
-import PostForm from '../post/PostForm';
+import PostForm from '../post/postForm/PostForm';
 
 const Feed = ({ navigate }) => {
   const [posts, setPosts] = useState([]);
