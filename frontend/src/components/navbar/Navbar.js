@@ -11,6 +11,11 @@ const Navbar = ({ navigate, signedIn }) => {
     navigate('/login');
   };
 
+  const profile = () => {
+   navigate('/profile');
+  }
+
+
   return (
     <nav className="nav-container" data-cy="nav">
       <div className='logo'><a href="/"><img className='logo-img' src="logo-blue.png" /></a></div>
@@ -19,6 +24,9 @@ const Navbar = ({ navigate, signedIn }) => {
           { signedIn &&
             <li className='nav-item'><a href="/login" onClick={ logout }>Sign out</a></li>
           }
+          { signedIn &&
+            <li className='nav-item'><a href="/profile" onClick={ profile }>Profile</a></li>
+          }          
           {
             signedIn &&
             <li className='nav-item'>Community</li>
