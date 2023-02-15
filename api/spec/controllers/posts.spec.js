@@ -25,10 +25,6 @@ describe("/posts", () => {
     }, secret);
   });
 
-  afterAll( async () => {
-    await User.deleteMany({});
-  })
-
   const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
     await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
     await Post.insertMany(seedPosts); // It seeds the seedUsers data (required at the top of this file) into the collection 
@@ -263,6 +259,17 @@ describe("/posts", () => {
 
   describe ('POST /like', () => {
     it ('should add the users id to the likes array of the post being liked', async () => {
+      const users = await User.find({}).limit(1);
+      const user = users[0];
+      
+      token = JWT.sign({
+        user_id: user.id,
+        // Backdate this token of 5 minutes
+        iat: Math.floor(Date.now() / 1000) - (5 * 60),
+        // Set the JWT token to expire in 10 minutes
+        exp: Math.floor(Date.now() / 1000) + (10 * 60)
+      }, secret);
+
       const post = new Post({
         content: 'this is a test post',
         user_id: new mongoose.Types.ObjectId(),
@@ -271,9 +278,6 @@ describe("/posts", () => {
       })
       await post.save();
 
-      const users = await User.find().limit(1);
-      const personWhoLikes = users[0]; // as we only have 1 user in the test database
-
       await request(app)
         .post("/posts/like")
         .set("Authorization", `Bearer ${token}`)
@@ -281,7 +285,7 @@ describe("/posts", () => {
 
       const updatedPost = await Post.findById(post._id);
       expect(updatedPost.likes).toEqual(
-        expect.arrayContaining([personWhoLikes._id]),
+        expect.arrayContaining([user._id]),
       );
     })
   })
