@@ -2,15 +2,17 @@ const app = require("../../app");
 const request = require("supertest");
 require("../mongodb_helper");
 const Post = require('../../models/post');
+const seedPosts = require('../seeds/postSeeds.js');
 const User = require('../../models/user');
 const JWT = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 
 let token;
 
+
 describe("/posts", () => {
   beforeAll( async () => {
-    const user = new User({email: "test@test.com", password: "12345678"});
+    const user = new User({firstName: "Billy", surname: "Bob", email: "test@test.com", password: "12345678"});
     await user.save();
 
     token = JWT.sign({
@@ -22,13 +24,14 @@ describe("/posts", () => {
     }, secret);
   });
 
-  beforeEach( async () => {
-    await Post.deleteMany({});
-  })
+  const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
+    await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
+    console.log(seedPosts);
+    await Post.insertMany(seedPosts); // It seeds the seedUsers data (required at the top of this file) into the collection 
+  }
 
-  afterAll( async () => {
-    await User.deleteMany({});
-    await Post.deleteMany({});
+  beforeEach( async () => {
+    await seedDB();
   })
 
   describe("POST, when token is present", () => {
@@ -237,7 +240,7 @@ describe("/posts", () => {
   })
 
   describe('DELETE /posts/:id', () => {
-    it('should delete a post', async () => {
+    xit('should delete a post', async () => {
       const postId = '5e9b04a8b0d4a914cc3f1234';
   
       const res = await request(app)

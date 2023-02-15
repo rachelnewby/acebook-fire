@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const TokenGenerator = require("../models/token_generator");
+const { post } = require("../routes/posts");
 
 const PostsController = {
   Index: (req, res) => {
@@ -12,7 +13,13 @@ const PostsController = {
     });
   },
   Create: (req, res) => {
-    const post = new Post(req.body);
+    console.log(req.user_id);
+    const post = new Post({
+      content: req.body.content,
+      likes: 0,
+      userID: req.user_id,
+      dateCreated: new Date()
+    });
     post.save(async (err) => {
       if (err) {
         throw err;
@@ -35,6 +42,21 @@ const PostsController = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  Update: async (req, res) => {
+    const postId = req.params.id;
+    try {
+      const updatePost = await Post.findOneAndUpdate({ _id: postId}, req.body, {
+        new: true
+      });
+      const token = await TokenGenerator.jsonwebtoken(req.user_id);
+      res
+        .status(200)
+        .json({message: "Post updated successfully", post: updatePost, token: token})
+    } catch (error) {
+      res.status(500).json({ error: err.message});
+    }
+  }
   };
 
 module.exports = PostsController;

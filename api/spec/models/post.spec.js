@@ -1,14 +1,23 @@
 var mongoose = require("mongoose");
+var Post = require('../../models/post');
+const seedPosts = require('../seeds/postSeeds.js');
 
 require("../mongodb_helper");
-var Post = require("../../models/post");
 
 describe("Post model", () => {
-  beforeEach((done) => {
-    mongoose.connection.collections.posts.drop(() => {
-      done();
-    });
+  beforeEach(async () => {
+    // mongoose.connection.collections.posts.drop(() => {
+    //   done();
+    // });
+
+    await seedDB();
   });
+
+  const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
+    await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
+    console.log(seedPosts);
+    await Post.insertMany(seedPosts); // It seeds the seedUsers data (required at the top of this file) into the collection 
+  }
 
   it("has a message", () => {
     var post = new Post({ message: "some message" });
