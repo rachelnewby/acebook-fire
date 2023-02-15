@@ -31,12 +31,11 @@ const PostsController = {
 
   },
   Create: (req, res) => {
-    console.log(req.user_id);
     const post = new Post({
       content: req.body.content,
       likes: [],
-      userID: req.user_id,
-      dateCreated: new Date()
+      user_id: req.user_id,
+      date_created: new Date()
     });
     post.save(async (err) => {
       if (err) {
