@@ -3,6 +3,7 @@
   flex-direction: row;
   background-color: #1778f2;
   color: white;
+  min-height: 8vh;
 }
 
 .nav-list{
