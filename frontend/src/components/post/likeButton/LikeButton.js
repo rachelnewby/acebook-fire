@@ -22,7 +22,8 @@ const LikeButton = ({post, setLike, liked}) => {
   }
 
   return( 
-    <div>
+    <div className="like-container">
+      <span className='like-count'>{post.likes.length}</span>
       <button onClick={handleClick} className={`footer-button like-button ${liked ? 'like-button--liked' : ''}`}><MdThumbUpOffAlt /></button>   
     </div>
   )
