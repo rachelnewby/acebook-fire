@@ -3,6 +3,7 @@
   flex-direction: row;
   background-color: #1778f2;
   color: white;
+  min-height: 8vh;
 }
 
 .nav-list{
@@ -12,7 +13,6 @@
   align-items: center;
   flex-direction: row;
   list-style: none;
-  /* transition: all 0.3s; */
 }
 
 .logo{
@@ -35,10 +35,6 @@ a{
   transition: all 0.3s;
 }
 
-a:hover{
-  /* color: red; */
-}
-
 .nav-item:hover{
   transform: scale(1.1);
 }
@@ -46,3 +42,4 @@ a:hover{
 .nav-item:not(:last-child){
   margin-right: 40px;
 }
+

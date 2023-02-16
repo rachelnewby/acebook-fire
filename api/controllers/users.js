@@ -3,6 +3,7 @@ const TokenGenerator = require("../models/token_generator");
 const JWT = require('jsonwebtoken');
 
 
+
 const UsersController = {
   Index: (req, res) => {
     User.find({}, async (err, users) => {
@@ -28,6 +29,7 @@ const UsersController = {
     });
   },
 
+
   Update: async (req, res) => {
     const pfid = req.body.pfid
     const bodyToken = req.body.token
@@ -45,6 +47,19 @@ const UsersController = {
     } catch (err) {
       res.status(500).json({error: err.message})
     }
+
+  Info: (req, res) => {
+    User.findOne({ user: req.body.email }, (err, user) => {
+      if (err) {
+        res.status(500).json({ message: 'Internal Server Error' });
+      }
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+      } else {
+        res.status(200).json({ email: user.email });
+      }
+    });
+
   }
 };
 

@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { BiEditAlt } from 'react-icons/bi';
+import { MdCancel } from 'react-icons/md';
+import './EditButtonPost.css'
 
 const EditButton = ({post, onUpdate}) => {
 
@@ -15,12 +18,14 @@ const EditButton = ({post, onUpdate}) => {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          message: newMessage,
-        }),
+        body: JSON.stringify({ 
+          content: newMessage,
+          likes: post.likes,
+          user_id: token.user_id,
+          date_created: new Date()
+        })
       });
       setIsEditing(false)
-      onUpdate()
     } catch (error) {
       console.log(error)
     }
@@ -38,10 +43,10 @@ const EditButton = ({post, onUpdate}) => {
           <button onClick={handleClick}>Update post</button>
         </div>
       ) : (
-        <p>{console.log("edit button was clicked")}</p>
+        <> </>
       )}
-      <button onClick={() => setIsEditing(!isEditing)}>
-        {isEditing ? "Cancel" : "Edit"}
+      <button className="footer-button edit-button" onClick={() => setIsEditing(!isEditing)}>
+        {isEditing ? <MdCancel /> : <BiEditAlt />}
       </button>
     </div>
   );

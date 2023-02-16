@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { BiTrash } from 'react-icons/bi';
+import './DeleteButtonPost.css'
 
 
 const DeleteButtonPost = ({post, id, setIsDeleted}) => {
@@ -7,7 +8,6 @@ const DeleteButtonPost = ({post, id, setIsDeleted}) => {
 
 
   const handleClick = async () => {
-    console.log(post)
     try {
       await fetch(`/posts/${post._id}`, {
         method: 'delete',
@@ -22,9 +22,7 @@ const DeleteButtonPost = ({post, id, setIsDeleted}) => {
   };
 
   return (
-    <div className="post">
-      <button onClick={handleClick}>delete post</button>
-    </div>
+    <button className="footer-button delete-button" onClick={handleClick}><BiTrash /></button>
   );
 };
 

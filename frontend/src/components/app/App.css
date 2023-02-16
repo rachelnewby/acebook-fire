@@ -3,4 +3,10 @@
 }
 .app__body {
   display: flex;
+  position: relative;
+}
+
+html{
+  box-sizing: border-box;
+  font-size: 62.5%;
 }

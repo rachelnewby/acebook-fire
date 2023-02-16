@@ -1,0 +1,9 @@
+.login-page__container{
+  min-height: 92vh;
+  
+  background-image: linear-gradient(
+      to bottom,
+      var(--color-star-command-blue),
+      var(--color-baby-powder)
+    );
+}

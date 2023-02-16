@@ -1,0 +1,12 @@
+.edit-button{
+  position: absolute;
+  left: 10%;
+  bottom: 4%;
+  transition: all 0.2s;
+  font-size: 20px;
+}
+
+.edit-button:hover{
+  font-size: 22px;
+  transform: translate(-1px, 0px);
+}
