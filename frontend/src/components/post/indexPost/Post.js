@@ -11,7 +11,6 @@ const Post = ({post, user}) => {
   const [updatedPost, setUpdatedPost] = useState(post);
   const [liked, setLiked] = useState(false);
 
-  
 
   useEffect(() => {
     // Refresh the page after count reaches a certain value

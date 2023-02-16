@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import Post from '../post/indexPost/Post'
 import './Feed.css';
-
 import PostForm from '../post/postForm/PostForm';
 
 const Feed = ({ navigate }) => {
@@ -46,7 +45,9 @@ const Feed = ({ navigate }) => {
       </>
     )
   } else {
-    navigate('/login')
+    console.log('no token');
+    console.log(navigate);
+    navigate('/signup');
   }
 }
 
