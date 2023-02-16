@@ -29,7 +29,7 @@ const Navbar = ({ navigate, signedIn }) => {
           }          
           {
             signedIn &&
-            <li className='nav-item'><a href="#">Community</a></li>
+            <li className='nav-item'><a href="/users">Community</a></li>
           }
           {
             !signedIn &&

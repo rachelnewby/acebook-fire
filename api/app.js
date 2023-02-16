@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // middleware function to check for valid tokens
 const tokenChecker = (req, res, next) => {
-
+  console.log('Checking Token')
   let token;
   const authHeader = req.get("Authorization")
 
@@ -33,6 +33,7 @@ const tokenChecker = (req, res, next) => {
       console.log(err)
       res.status(401).json({message: "auth error"});
     } else {
+      console.log('payload:', payload)
       req.user_id = payload.user_id;
       next();
     }

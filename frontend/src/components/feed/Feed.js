@@ -10,7 +10,7 @@ const Feed = ({ navigate }) => {
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [form, setForm] = useState(false);
 
-
+  
   useEffect(() => {
     if(token) {
       fetch("/posts", {
@@ -36,6 +36,7 @@ const Feed = ({ navigate }) => {
           {/* <button className='custom-btn btn' onClick={() => setForm(!form) }>Add Post</button> */}
           <PostForm />
         </div>
+
 
         <div id='feed' role="feed">
             {posts.map(
