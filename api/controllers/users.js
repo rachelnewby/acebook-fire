@@ -29,7 +29,6 @@ const UsersController = {
     });
   },
 
-
   Update: async (req, res) => {
     const pfid = req.body.pfid
     const bodyToken = req.body.token
@@ -47,6 +46,7 @@ const UsersController = {
     } catch (err) {
       res.status(500).json({error: err.message})
     }
+  },
 
   Info: (req, res) => {
     User.findOne({ user: req.body.email }, (err, user) => {
