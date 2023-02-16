@@ -57,20 +57,20 @@ const ProfilePage = () => {
     <div className='profile-container'>
       <h1>Profile Page</h1>
       <div className='user-info'>
+        <p>Welcome to your profile, {user.firstName}</p>
         <p>Email: {user.email}</p>
-        <p>Name: {user.firstName}</p>
-        <p>Surname: {user.surname}</p>
-        <p>Bio: {user.bio}</p>
+        <p>Bio: This is where your bio would appear if we didn't run out of time</p>
         </div>
         <div className='friend-list'>
           <h1>Friends </h1>
+          <p> no friends lol </p>
           <p>{/*user.friendsList*/}</p> 
         </div>
         
       <div className='own-posts'>
       <h1>Posts</h1>
       
-      <p>{posts.map(
+      <p>{posts.slice(0).reverse().map(
               (post) => ( <Post post={ post } key={ post._id } /> )
             )}</p>
         

@@ -39,7 +39,7 @@ const Feed = ({ navigate }) => {
 
 
         <div id='feed' role="feed">
-            {posts.map(
+        {posts.slice(0).reverse().map(
               (post) => ( <Post post={ post } key={ post._id } /> )
             )}
         </div>

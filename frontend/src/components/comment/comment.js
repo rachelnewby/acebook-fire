@@ -21,16 +21,15 @@ const CommentForm = ({user, post}) => {
         comment: newComment
       })
     });
-
-    if (response.status !== 201) {
+    
+    if (!response.ok) {
       console.log("comment was not created");
     } else {
       console.log("comment was created");
       let data = await response.json();
       window.localStorage.setItem("token", data.token);
     }
-  };
-
+  }
   const handleCommentInputChange = (event) => {
     setNewComment(event.target.value);
   };

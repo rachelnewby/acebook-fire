@@ -4,6 +4,8 @@ import DeleteButtonPost from '../deleteButton/DeleteButtonPost';
 import EditButton from '../editButton/EditButtonPost';
 import LikeButton from '../likeButton/LikeButton';
 import { FaRegUser } from 'react-icons/fa';
+import CommentForm from '../../comment/comment';
+import CommentList from '../../comment/commentList';
 
 const Post = ({post}) => {
   const [isDeleted, setIsDeleted] = useState(false);
@@ -38,6 +40,8 @@ const Post = ({post}) => {
         <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
         <EditButton post={post} onUpdate={!isEditing}/>
         <LikeButton post={post} />
+        <CommentForm user={post.user_id} post={post} />
+      
       </div>
     </div>
   );
