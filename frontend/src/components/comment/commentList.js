@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import CommentForm from "./comment";
 
 const CommentList = ({post}) => {
   const [comments, setComments] = useState([]);
@@ -6,17 +7,17 @@ const CommentList = ({post}) => {
   useEffect(() => {
     const fetchComments = async () => {
       const token = window.localStorage.getItem("token");
-      const response = await fetch(`/comments/post/${post._id}`, {
+      const response = await fetch(`/comments/${post._id}`, {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
-        } 
+        }
       });
     
       if (response.ok) {
         const data = await response.json();
-        console.log("data:", data)
+        console.log("data",data)
         setComments(data);
        
       }
@@ -28,6 +29,7 @@ const CommentList = ({post}) => {
   return (
     <div>
       <h2>Comments ({comments.length})</h2>
+      <CommentForm post={post} setComments={setComments} />
       <ul>
         {comments.map(comment => (
           <li key={comment._id}>

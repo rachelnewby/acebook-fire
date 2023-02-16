@@ -13,12 +13,7 @@ function Post({ post }) {
   const [updatedPost, setUpdatedPost] = useState(post);
   const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    // Fetch comments for the post
-    fetch(`your-database-url/comments?postId=${post._id}`)
-      .then(response => response.json())
-      .then(data => setComments(data));
-  }, [post._id]);
+
 
   useEffect(() => {
     // Refresh the page after count reaches a certain value
@@ -48,14 +43,31 @@ function Post({ post }) {
         <EditButton post={post} onUpdate={!isEditing} />
         <LikeButton post={post} />
         <CommentForm user={post.user_id} post={post} />
+       
         <div className="comments-container">
-          <h3>Comments:</h3>
-          {comments.map(comment => (
+          
+         
+   
+      <h2>Comments ({comments.length})</h2>
+      <ul>
+  {Object.values(comments).map(comment => (
+    <li key={comment._id}>
+      <p>{comment.comment}</p>
+      <p>By {comment.user_id.firstName} {comment.user_id.surname[0]}</p>
+    </li>
+  ))}
+</ul>
+
+    
+
+
+{/* 
+          {setComments.map(comment => (
             <div key={comment._id}>
-              <p>{comment.content}</p>
+              <p>{comment.comment}</p>
               <p>By {comment.user_id.firstName} {comment.user_id.surname[0]}</p>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
