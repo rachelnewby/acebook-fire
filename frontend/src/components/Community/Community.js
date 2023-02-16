@@ -36,7 +36,7 @@ const Community = ({ navigate }) => {
           </button>
         <div id='feed' role="feed">
             {potentialFriends.map(
-              (potentialFriend) => ( <PotentialFriend potentialFriend={ potentialFriend } key={ potentialFriend._id } userId={token}/> )
+              (potentialFriend) => ( <PotentialFriend potentialFriend={ potentialFriend } key={ potentialFriend._id } token={token}/> )
             )}
         </div>
       </div>

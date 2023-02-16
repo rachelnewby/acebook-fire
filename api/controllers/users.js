@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const TokenGenerator = require("../models/token_generator");
+const JWT = require('jsonwebtoken');
+
 
 const UsersController = {
   Index: (req, res) => {
@@ -25,6 +27,22 @@ const UsersController = {
       }
     });
   },
+
+  Update: async (req, res) => {
+    console.log('req.user_id:', req.user_id)
+    console.log('req.session:', req.session)
+    const pfid = req.body.pfid
+    const token = req.body.token
+    
+    console.log('req.body.token:', req.body.token)
+    const currentUserId = JWT.verify(token, 'SUPER_SECRET')
+    // let id = currentUserId.user_id
+    console.log(currentUserId.user_id)
+    console.log("this is the path we want")
+    // console.log(id)
+    
+
+  }
 };
 
 module.exports = UsersController;

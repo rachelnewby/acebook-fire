@@ -1,9 +1,33 @@
 const express = require("express");
 const router = express.Router();
+const JWT = require("jsonwebtoken");
+
 
 const UsersController = require("../controllers/users");
 
+const tokenChecker = (req, res, next) => {
+  console.log('Checking Token')
+  let token;
+  const authHeader = req.get("Authorization")
+
+  if(authHeader) {
+    token = authHeader.slice(7)
+  }
+
+  JWT.verify(token, process.env.JWT_SECRET, (err, payload) => {
+    if(err) {
+      console.log(err)
+      res.status(401).json({message: "auth error"});
+    } else {
+      console.log('payload:', payload)
+      req.user_id = payload.user_id;
+      next();
+    }
+  });
+};
+
+router.get("/", tokenChecker, UsersController.Index);
 router.post("/", UsersController.Create);
-router.get("/", UsersController.Index);
+router.put("/", tokenChecker, UsersController.Update);
 
 module.exports = router;
