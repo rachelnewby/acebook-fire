@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import Post from '../post/indexPost/Post'
 import './Feed.css';
 import PostForm from '../post/postForm/PostForm';
@@ -24,7 +23,7 @@ const Feed = ({ navigate }) => {
           setUserId(data.currentUser);
         })
     }
-  }, [])
+  })
   
   if(token) {
     return(
@@ -35,8 +34,6 @@ const Feed = ({ navigate }) => {
           {/* <button className='custom-btn btn' onClick={() => setForm(!form) }>Add Post</button> */}
           <PostForm />
         </div>
-
-
         <div id='feed' role="feed">
             {posts.map(
               (post) => ( <Post post={ post } user={ userId }key={ post._id } /> )

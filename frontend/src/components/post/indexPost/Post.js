@@ -4,6 +4,7 @@ import DeleteButtonPost from '../deleteButton/DeleteButtonPost';
 import EditButton from '../editButton/EditButtonPost';
 import LikeButton from '../likeButton/LikeButton';
 import { FaRegUser } from 'react-icons/fa';
+import { animations } from 'react-animation'
 
 const Post = ({post, user}) => {
   const [isDeleted, setIsDeleted] = useState(false);
@@ -23,7 +24,7 @@ const Post = ({post, user}) => {
   return isDeleted ? (
     <> </>
   ) : (
-    <div className="post-container">
+    <div className="post-container" style={{animation: animations.bounceIn}}>
       <div className='post-header'>
         <div className='post-profile-picture'><FaRegUser /></div>
         <div className='post-name'>{post.user_id.firstName} {post.user_id.surname[0]}</div>
