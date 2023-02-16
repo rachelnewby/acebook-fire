@@ -20,7 +20,7 @@ const SignUpForm = ({ navigate }) => {
         email: email, 
         password: password,
         firstName: firstName,
-        lastName: lastName
+        surname: lastName
        })
     })
       .then(response => {

@@ -1,0 +1,82 @@
+.post-container {
+  background-color: lightgrey;
+  margin: 5px;
+  padding: 15px 15px 7px 15px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  position: relative;
+}
+
+.post-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-name{
+  font-weight: 800;
+}
+
+.post-profile-picture{
+  margin-right: 4px;
+  font-size: 30px;
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-date-time__container{
+  text-align: right;
+  margin-left: auto;
+}
+
+.post-date{
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.post-time{
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.post-content{
+  margin-top: 5px;
+  min-height: 50px;
+  flex-grow: 1;
+  word-break: break-all;
+  padding: 5px;
+}
+
+.post-footer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+}
+
+.footer-button{
+  box-shadow: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 30px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.footer-button:hover{
+  font-size: 38px;
+  transform: translate(2px, 2px);
+}

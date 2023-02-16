@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import Post from '../post/Post'
+import Post from '../post/indexPost/Post'
 import './Feed.css';
 
-import PostForm from '../post/PostForm';
+import PostForm from '../post/postForm/PostForm';
 
 const Feed = ({ navigate }) => {
   const [posts, setPosts] = useState([]);
@@ -23,7 +23,6 @@ const Feed = ({ navigate }) => {
           window.localStorage.setItem("token", data.token)
           setToken(window.localStorage.getItem("token"))
           setPosts(data.posts);
-          console.log(posts);
         })
     }
   }, [])
@@ -31,10 +30,12 @@ const Feed = ({ navigate }) => {
   if(token) {
     return(
       <>
-        <h2 className='h2'>Posts</h2>
-          <button className='deleteButton' onClick={() => setForm(!form) }>Add Post</button>
-          {form && <PostForm />}
+        <h2 className='post-title'>Posts</h2>
 
+        <div className='add-post-container'>
+          {/* <button className='custom-btn btn' onClick={() => setForm(!form) }>Add Post</button> */}
+          <PostForm />
+        </div>
 
         <div id='feed' role="feed">
             {posts.map(

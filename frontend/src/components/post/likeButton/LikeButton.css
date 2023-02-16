@@ -1,0 +1,11 @@
+.like-button{
+  position: absolute;
+  right: 3%;
+  bottom: 4%;
+  transition: all 0.2s;
+}
+
+.like-button--liked{
+  background-color: #1778f2;
+  color: white;
+}

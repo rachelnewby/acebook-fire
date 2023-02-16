@@ -6,6 +6,7 @@ const seedPosts = require('../seeds/postSeeds.js');
 const User = require('../../models/user');
 const JWT = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
+var mongoose = require("mongoose");
 
 let token;
 
@@ -26,7 +27,6 @@ describe("/posts", () => {
 
   const seedDB = async () => { // We are assigning a function to the variable seedDB which is asynchronous 
     await Post.deleteMany({}); // It deletes the existing contents from the database (User is the schema for one user)
-    //console.log(seedPosts);
     await Post.insertMany(seedPosts); // It seeds the seedUsers data (required at the top of this file) into the collection 
   }
 
@@ -41,9 +41,9 @@ describe("/posts", () => {
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
         .send({ content: "howdy!",
-        date_created: new Date(),
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 0,
+        dateCreated: new Date(),
+        user_id: 2,
+        likes: [],
         token: token });
       expect(response.status).toEqual(201);
     });
@@ -54,12 +54,18 @@ describe("/posts", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 0,
+        user_id: new mongoose.Types.ObjectId(),
+        likes: [],
         token: token });
       let posts = await Post.find();
-      expect(posts.length).toEqual(1);
-      expect(posts[0].content).toEqual("howdy!");
+      expect(posts.length).toEqual(6);
+      expect(posts).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            content: "howdy!"
+          })
+        ])
+      );
     });
   
     test("returns a new token", async () => {
@@ -68,8 +74,8 @@ describe("/posts", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: 2,
-        likes: 0,
+        user_id: new mongoose.Types.ObjectId(),
+        likes: [],
         token: token })
       let newPayload = JWT.decode(response.body.token, process.env.JWT_SECRET);
       let originalPayload = JWT.decode(token, process.env.JWT_SECRET);
@@ -83,8 +89,8 @@ describe("/posts", () => {
         .post("/posts")
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 0 });
+        user_id: new mongoose.Types.ObjectId(),
+        likes: [] });
       expect(response.status).toEqual(401);
     });
   
@@ -93,8 +99,8 @@ describe("/posts", () => {
         .post("/posts")
         .send({ content: "howdy!",
         date_created: new Date(),
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 0 });
+        user_id: new mongoose.Types.ObjectId(),
+        likes: [] });
       let posts = await Post.find();
       expect(posts.length).toEqual(5);
     });
@@ -108,7 +114,23 @@ describe("/posts", () => {
   })
 
   describe("GET, when token is present", () => {
-    test("returns every post in the collection", async () => {      
+    test("returns every post in the collection", async () => {
+      await Post.deleteMany({}); // not going to use seeded data for this test
+      let post1 = new Post({
+        content: "howdy!",
+        date_created: new Date(),
+        user_id: new mongoose.Types.ObjectId(),
+        likes: []
+
+      });
+      let post2 = new Post({
+        content: "Something else",
+        date_created: new Date(),
+        user_id: new mongoose.Types.ObjectId(),
+        likes: []
+      });
+      await post1.save();
+      await post2.save();
       let response = await request(app)
         .get("/posts")
         .set("Authorization", `Bearer ${token}`)
@@ -121,14 +143,14 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great", 
         date_created: new Date (), 
-        user_id: '63ecb95f56d1cb1f1aa347a5', 
-        likes: 1
+        user_id: new mongoose.Types.ObjectId(), 
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: '63ecb95f56d1cb1f1aa347a5', 
-        likes: 5
+        user_id: new mongoose.Types.ObjectId(), 
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -143,14 +165,14 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 1
+        user_id: new mongoose.Types.ObjectId(),
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: '63ecb95f56d1cb1f1aa347a5', 
-        likes: 5
+        user_id: new mongoose.Types.ObjectId(), 
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -169,14 +191,14 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 1
+        user_id: new mongoose.Types.ObjectId(),
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: '63ecb95f56d1cb1f1aa347a5', 
-        likes: 5
+        user_id: new mongoose.Types.ObjectId(), 
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -189,13 +211,13 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 1});
+        user_id: new mongoose.Types.ObjectId(),
+        likes: []});
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: '63ecb9da4134d02102ee1f52', 
-        likes: 5
+        user_id: new mongoose.Types.ObjectId(), 
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -208,14 +230,14 @@ describe("/posts", () => {
       let post1 = new Post({
         content: "acebook is great",
         date_created: new Date(), 
-        user_id: '63ecb95f56d1cb1f1aa347a5',
-        likes: 1
+        user_id: new mongoose.Types.ObjectId(),
+        likes: []
       });
       let post2 = new Post({
         content: "i miss facebook", 
         date_created: new Date(), 
-        user_id: '63ecb9da4134d02102ee1f52', 
-        likes: 5
+        user_id: new mongoose.Types.ObjectId(), 
+        likes: []
       });
       await post1.save();
       await post2.save();
@@ -225,4 +247,47 @@ describe("/posts", () => {
     })
   })
 
+  describe('DELETE /posts/:id', () => {
+    it('should delete a post', async () => {
+      const postId = '63ed1d2fe1e67a6f929dc599';
+      const res = await request(app)
+        .delete(`/posts/${postId}`)
+        .expect(200);
+  
+      expect(res.body).toEqual({ message: 'Post deleted successfully' });
+    });
+  });
+
+  describe ('POST /like', () => {
+    it ('should add the users id to the likes array of the post being liked', async () => {
+      const users = await User.find({}).limit(1);
+      const user = users[0];
+      
+      token = JWT.sign({
+        user_id: user.id,
+        // Backdate this token of 5 minutes
+        iat: Math.floor(Date.now() / 1000) - (5 * 60),
+        // Set the JWT token to expire in 10 minutes
+        exp: Math.floor(Date.now() / 1000) + (10 * 60)
+      }, secret);
+
+      const post = new Post({
+        content: 'this is a test post',
+        user_id: new mongoose.Types.ObjectId(),
+        likes: [],
+        date_created: new Date()
+      })
+      await post.save();
+
+      await request(app)
+        .post("/posts/like")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ post_id: post._id});
+
+      const updatedPost = await Post.findById(post._id);
+      expect(updatedPost.likes).toEqual(
+        expect.arrayContaining([user._id]),
+      );
+    })
+  })
 });

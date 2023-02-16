@@ -1,0 +1,12 @@
+.delete-button{
+  position: absolute;
+  left: 4%;
+  bottom: 4%;
+  transition: all 0.2s;
+  font-size: 20px;
+}
+
+.delete-button:hover{
+  font-size: 22px;
+  transform: translate(-1px, 0px);
+}
