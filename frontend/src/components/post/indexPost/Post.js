@@ -5,7 +5,7 @@ import EditButton from '../editButton/EditButtonPost';
 import LikeButton from '../likeButton/LikeButton';
 import { FaRegUser } from 'react-icons/fa';
 
-const Post = ({post}) => {
+const Post = ({post, user}) => {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedPost, setUpdatedPost] = useState(post);
@@ -17,8 +17,6 @@ const Post = ({post}) => {
       window.location.reload();
     }
   }, [isEditing]);
-
-  console.log(post);
 
   return isDeleted ? (
     <> </>
@@ -35,8 +33,13 @@ const Post = ({post}) => {
       <article data-cy="post" className='post-content' key={ post._id }>{ updatedPost.content }</article>
 
       <div className='post-footer'>
-        <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
-        <EditButton post={post} onUpdate={!isEditing}/>
+        { user != post.user_id._id && 
+          <>
+            <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} />
+            <EditButton post={post} onUpdate={!isEditing}/>
+          </>
+        }
+        
         <LikeButton post={post} />
       </div>
     </div>
