@@ -29,19 +29,22 @@ const UsersController = {
   },
 
   Update: async (req, res) => {
-    console.log('req.user_id:', req.user_id)
-    console.log('req.session:', req.session)
     const pfid = req.body.pfid
-    const token = req.body.token
+    const bodyToken = req.body.token
     
-    console.log('req.body.token:', req.body.token)
-    const currentUserId = JWT.verify(token, 'SUPER_SECRET')
-    // let id = currentUserId.user_id
-    console.log(currentUserId.user_id)
-    console.log("this is the path we want")
-    // console.log(id)
-    
-
+    const currentUserId = JWT.verify(bodyToken, 'SUPER_SECRET')
+    console.log("this is the user id", currentUserId.user_id)
+    try {
+      await User.findOneAndUpdate({_id: currentUserId.user_id}, {$push: {friendsList: pfid}},
+      { new: true
+      })
+      const token = await TokenGenerator.jsonwebtoken(req.user_id);
+      res
+        .status(201)
+        .json({message: "Friend request sent", token: token})
+    } catch (err) {
+      res.status(500).json({error: err.message})
+    }
   }
 };
 

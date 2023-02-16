@@ -9,17 +9,11 @@ const PostsController = {
       if (err) {
         throw err;
       }
-      console.log('postsController req.user_id:', req.user_id)
       const token = await TokenGenerator.jsonwebtoken(req.user_id)
-      // const token = req.headers.authorization.slice(7)
-      // console.log(req.body.token)
-      const currentUserId = JWT.verify(token, 'SUPER_SECRET')
-      console.log(`Decoded token in posts controller: ${currentUserId.user_id}`) // Contains the user id 
       res.status(200).json({ posts: posts, token: token });
     });
   },
   Create: (req, res) => {
-    // console.log(req.user_id);
     const post = new Post({
       content: req.body.content,
       likes: 0,

@@ -6,7 +6,6 @@ const JWT = require("jsonwebtoken");
 const UsersController = require("../controllers/users");
 
 const tokenChecker = (req, res, next) => {
-  console.log('Checking Token')
   let token;
   const authHeader = req.get("Authorization")
 
@@ -19,7 +18,6 @@ const tokenChecker = (req, res, next) => {
       console.log(err)
       res.status(401).json({message: "auth error"});
     } else {
-      console.log('payload:', payload)
       req.user_id = payload.user_id;
       next();
     }
@@ -28,6 +26,6 @@ const tokenChecker = (req, res, next) => {
 
 router.get("/", tokenChecker, UsersController.Index);
 router.post("/", UsersController.Create);
-router.put("/", tokenChecker, UsersController.Update);
+router.put("/", tokenChecker, UsersController.Update); // It is essential that we have tokenChecker here so that we can make sure our token has the user id in it (without this, it doesn't)
 
 module.exports = router;
