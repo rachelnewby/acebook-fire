@@ -12,7 +12,8 @@ const UsersController = {
         return res.status(400).json({error: err})
       }
       const token = await TokenGenerator.jsonwebtoken(req.user_id) // Added await
-      res.status(200).json({ users: users, token: token });
+      console.log("req.user_id", req.user_id)
+      res.status(200).json({ users: users, token: token, loggedInUser: req.user_id });
     });
   },
 
@@ -47,6 +48,7 @@ const UsersController = {
     } catch (err) {
       res.status(500).json({error: err.message})
     }
+  },
 
   Info: (req, res) => {
     User.findOne({ user: req.body.email }, (err, user) => {
