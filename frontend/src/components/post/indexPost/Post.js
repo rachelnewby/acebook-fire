@@ -18,8 +18,6 @@ const Post = ({post}) => {
     }
   }, [isEditing]);
 
-  console.log(post);
-
   return isDeleted ? (
     <> </>
   ) : (
