@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './SignUpForm.css'
 
 const SignUpForm = ({ navigate }) => {
 
@@ -49,13 +50,31 @@ const SignUpForm = ({ navigate }) => {
 
 
     return (
-      <form onSubmit={handleSubmit}>
-          <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange} />
-          <input placeholder="Password" id="password" type='password' value={ password } onChange={handlePasswordChange} />
-          <input placeholder="Firstname" id="firstname" type='text' value={ firstName } onChange={handleFirstNameChange} />
-          <input placeholder="Lastname" id="lastname" type='text' value={ lastName } onChange={handleLastNameChange} />
-        <input id='submit' type="submit" value="Submit" />
-      </form>
+      <div className="register-page__container">
+        <div className="form__container">
+          <h1>Register</h1>
+          <form className="form__inputs" onSubmit={handleSubmit}>
+            <div className="form__input">
+              <input autoFocus name="firstname" id="firstname" type='text' value={ firstName } onChange={handleFirstNameChange} />
+              <label htmlFor="firstname">Firstname</label>
+            </div>
+            <div className="form__input">
+              <input name="lastname" id="lastname" type='text' value={ lastName } onChange={handleLastNameChange} />
+              <label htmlFor="lastname">Lastname</label>
+            </div>
+            <div className="form__input form__email">
+              <input name="email" id="email" type='email' value={ email } onChange={handleEmailChange} />
+              <label htmlFor="email">Email</label>
+            </div>
+            <div className="form__input form__password">
+              <input name="password" id="password" type='password' value={ password } onChange={handlePasswordChange} />
+              <label htmlFor="password">Password</label>
+            </div>
+            <button className="form__button" type="submit" value="Submit">Register</button>
+          </form>
+        </div>
+      </div>
+
     );
 }
 

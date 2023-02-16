@@ -34,6 +34,7 @@ describe("/posts", () => {
     await seedDB();
   })
 
+  
   describe("POST, when token is present", () => {
     test("responds with a 201", async () => {
       let response = await request(app)
@@ -135,7 +136,7 @@ describe("/posts", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({token: token});
       let messages = response.body.posts.map((post) => ( post.content ));
-      expect(messages).toEqual(["howdy!", "Something else"]);
+      expect(messages).toEqual(["acebook is great", "i miss facebook", "anyone recognise this person robbed newsagents sunday pls dm", "Josh has no strong views relating to Susan Sarandon", "i hate my baby daddy"]);
     })
 
     test("the response code is 200", async () => {
