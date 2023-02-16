@@ -13,7 +13,6 @@
   align-items: center;
   flex-direction: row;
   list-style: none;
-  /* transition: all 0.3s; */
 }
 
 .logo{
@@ -34,10 +33,6 @@ a{
 
 .nav-item{
   transition: all 0.3s;
-}
-
-a:hover{
-  /* color: red; */
 }
 
 .nav-item:hover{

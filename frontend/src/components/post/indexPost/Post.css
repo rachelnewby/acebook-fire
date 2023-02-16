@@ -18,6 +18,8 @@
 
 .post-name{
   font-weight: 800;
+  margin-left: 1rem;
+  font-size: 1.6rem;
 }
 
 .post-profile-picture{
@@ -53,6 +55,7 @@
   flex-grow: 1;
   word-break: break-all;
   padding: 5px;
+  font-size: 1.6rem;
 }
 
 .post-footer{

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Profile.css';
 import  { useState, useEffect } from 'react';
-import Post from '../post/Post';
+import Post from '../post/indexPost/Post';
 
 
 
