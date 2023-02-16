@@ -43,7 +43,7 @@ const Post = ({post, user}) => {
           </>
         }
         
-        <LikeButton post={post} setLike={setLiked} liked={liked} />
+        <LikeButton post={post} setLike={setLiked} liked={liked} user={user} />
       </div>
     </div>
   );
