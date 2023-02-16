@@ -1,0 +1,36 @@
+* {
+  cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='30' height='36' viewport='0 0 100 100' style='fill:black;font-size:18px;'><text y='50%'>🚀</text></svg>") 16 0,auto; 
+}
+
+.feed {
+  flex: 1;
+  padding: 30px 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoutButton{
+  Position: Absolute;
+  Right: 56px;
+  Bottom: 20px;
+  Width: 211px;
+  border-radius: 75%;
+
+}
+
+.btn:hover {
+  font-size: 17px;;
+}
+
+.h2{
+  width: 100px;
+  font-size: 44px;
+  line-height: 30px;
+  padding: 3px 8px;
+  border-radius: 25%;
+  border-color: aqua;
+  color: blue;
+  background-color: aqua;
+}

@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const TokenGenerator = require("../models/token_generator");
+const JWT = require('jsonwebtoken');
+
 
 
 const UsersController = {
@@ -26,6 +28,26 @@ const UsersController = {
       }
     });
   },
+
+
+  Update: async (req, res) => {
+    const pfid = req.body.pfid
+    const bodyToken = req.body.token
+    
+    const currentUserId = JWT.verify(bodyToken, 'SUPER_SECRET')
+    console.log("this is the user id", currentUserId.user_id)
+    try {
+      await User.findOneAndUpdate({_id: currentUserId.user_id}, {$push: {friendsList: pfid}},
+      { new: true
+      })
+      const token = await TokenGenerator.jsonwebtoken(req.user_id);
+      res
+        .status(201)
+        .json({message: "Friend request sent", token: token})
+    } catch (err) {
+      res.status(500).json({error: err.message})
+    }
+
   Info: (req, res) => {
     User.findOne({ user: req.body.email }, (err, user) => {
       if (err) {
@@ -37,6 +59,7 @@ const UsersController = {
         res.status(200).json({ email: user.email });
       }
     });
+
   }
 };
 

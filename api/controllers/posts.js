@@ -2,6 +2,7 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const TokenGenerator = require("../models/token_generator");
 const { post } = require("../routes/posts");
+const JWT = require('jsonwebtoken');
 
 const PostsController = {
   Index: (req, res) => {
