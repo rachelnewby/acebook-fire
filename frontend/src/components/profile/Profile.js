@@ -76,8 +76,11 @@ const updateBio = (newBio) => {
         </div>
         <div className='friend-list'>
           <h1>Friends </h1>
-          <p> no friends lol </p>
-          <p>{/*user.friendsList*/}</p> 
+          {/* this only shows friend as user id  */}
+          <p> no friends lol
+            {/* {user.friendsList} */} 
+             </p>
+          
         </div>
         
       <div className='own-posts'>

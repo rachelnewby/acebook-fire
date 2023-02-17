@@ -59,7 +59,8 @@ const UsersController = {
         res.status(200).json({ firstName: user.firstName,
           surname: user.surname,
           email: user.email, 
-          bio: user.bio });
+          bio: user.bio ,
+        friendsList: user.friendsList});
       }
     });
 
