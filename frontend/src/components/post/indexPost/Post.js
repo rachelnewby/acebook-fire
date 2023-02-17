@@ -4,9 +4,9 @@ import DeleteButtonPost from '../deleteButton/DeleteButtonPost';
 import EditButton from '../editButton/EditButtonPost';
 import LikeButton from '../likeButton/LikeButton';
 import { FaRegUser } from 'react-icons/fa';
-import { animations } from 'react-animation'
+import { animations, AnimateOnChange } from 'react-animation'
 
-const Post = ({post, user}) => {
+const Post = ({post, user, isEdited}) => {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedPost, setUpdatedPost] = useState(post);
@@ -33,13 +33,17 @@ const Post = ({post, user}) => {
           <div className="post-time">{post.date_created.slice(11, 16)}</div>
         </div>
       </div>
-      <article data-cy="post" className='post-content' key={ post._id }>{ updatedPost.content }</article>
+      <article data-cy="post" className='post-content' key={ post._id }>
+        <AnimateOnChange>
+          { updatedPost.content }
+        </AnimateOnChange>
+      </article>
 
       <div className='post-footer'>
         { user != post.user_id._id || 
           <>
             <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} />
-            <EditButton post={post} onUpdate={!isEditing}/>
+            <EditButton post={post} onUpdate={!isEditing} isEdited={isEdited} setUpdatedPost={setUpdatedPost}/>
           </>
         }
         

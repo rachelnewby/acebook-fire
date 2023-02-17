@@ -4,7 +4,7 @@ import { BiEditAlt } from 'react-icons/bi';
 import { MdCancel } from 'react-icons/md';
 import './EditButtonPost.css'
 
-const EditButton = ({post, onUpdate}) => {
+const EditButton = ({post, setUpdatedPost, isEdited}) => {
 
   const [newMessage, setNewMessage] = useState(post.message)
   const [isEditing, setIsEditing] = useState(false);
@@ -25,7 +25,14 @@ const EditButton = ({post, onUpdate}) => {
           date_created: new Date()
         })
       });
-      setIsEditing(false)
+      setIsEditing(false);
+      isEdited(true);
+      setUpdatedPost({
+        content: newMessage,
+        likes: post.likes,
+        user_id: token.user_id,
+        date_created: post.date_created
+      })
     } catch (error) {
       console.log(error)
     }
@@ -45,7 +52,11 @@ const EditButton = ({post, onUpdate}) => {
       ) : (
         <> </>
       )}
-      <button className="footer-button edit-button" onClick={() => setIsEditing(!isEditing)}>
+      <button 
+        className="footer-button edit-button" 
+        onClick={() => {
+          setIsEditing(!isEditing);
+        }}>
         {isEditing ? <MdCancel /> : <BiEditAlt />}
       </button>
     </div>

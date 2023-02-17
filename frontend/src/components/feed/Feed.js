@@ -7,6 +7,7 @@ const Feed = ({ navigate }) => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [userId, setUserId] = useState();
+  const [isEdited, setIsEdited] = useState(false);
   
   useEffect(() => {
     if(token) {
@@ -36,7 +37,7 @@ const Feed = ({ navigate }) => {
         </div>
         <div id='feed' role="feed">
             {posts.map(
-              (post) => ( <Post post={ post } user={ userId }key={ post._id } /> )
+              (post) => ( <Post post={ post } user={ userId }key={ post._id } isEdited={setIsEdited}/> )
             )}
         </div>
       </>
