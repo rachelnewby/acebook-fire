@@ -4,7 +4,7 @@ import { BiEditAlt } from 'react-icons/bi';
 import { MdCancel } from 'react-icons/md';
 import './EditButtonPost.css'
 
-const EditButton = ({post, setUpdatedPost, isEdited}) => {
+const EditButton = ({post, setUpdatedPost}) => {
 
   const [newMessage, setNewMessage] = useState(post.message)
   const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +26,6 @@ const EditButton = ({post, setUpdatedPost, isEdited}) => {
         })
       });
       setIsEditing(false);
-      isEdited(true);
       setUpdatedPost({
         content: newMessage,
         likes: post.likes,

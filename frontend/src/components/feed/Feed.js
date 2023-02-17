@@ -38,7 +38,7 @@ const Feed = ({ navigate }) => {
         <div id='feed' role="feed">
 
         {posts.slice(0).reverse().map(
-              (post) => ( <Post post={ post } key={ post._id } /> )
+              (post) => ( <Post post={ post } key={ post._id } user={userId} /> )
 
             )}
         </div>
