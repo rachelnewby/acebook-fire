@@ -28,6 +28,7 @@ router.get("/", tokenChecker, UsersController.Index);
 router.post("/", UsersController.Create);
 router.put("/", tokenChecker, UsersController.Update); // It is essential that we have tokenChecker here so that we can make sure our token has the user id in it (without this, it doesn't)
 router.get("/profile", UsersController.Info);
+router.put("/update-bio", tokenChecker, UsersController.UpdateBio)
 
 
 module.exports = router;

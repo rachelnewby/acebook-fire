@@ -36,8 +36,10 @@ const Feed = ({ navigate }) => {
           <PostForm />
         </div>
         <div id='feed' role="feed">
-            {posts.map(
-              (post) => ( <Post post={ post } user={ userId }key={ post._id } isEdited={setIsEdited}/> )
+
+        {posts.slice(0).reverse().map(
+              (post) => ( <Post post={ post } key={ post._id } /> )
+
             )}
         </div>
       </>

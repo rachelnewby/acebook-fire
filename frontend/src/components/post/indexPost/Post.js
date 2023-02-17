@@ -4,18 +4,22 @@ import DeleteButtonPost from '../deleteButton/DeleteButtonPost';
 import EditButton from '../editButton/EditButtonPost';
 import LikeButton from '../likeButton/LikeButton';
 import { FaRegUser } from 'react-icons/fa';
+
+import CommentForm from '../../comment/comment';
+import CommentList from '../../comment/commentList';
 import { animations, AnimateOnChange } from 'react-animation'
 
-const Post = ({post, user, isEdited}) => {
+function Post({ post }) {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedPost, setUpdatedPost] = useState(post);
-  const [liked, setLiked] = useState(false);
+  const [comments, setComments] = useState([]);
 
+  const handleNewComment = (comment) => {
+    setComments([...comments, comment]);
+  };
 
   useEffect(() => {
-    // Refresh the page after count reaches a certain value
-    setLiked(post.likes.includes(user));
     if (isEditing) {
       window.location.reload();
     }
@@ -33,24 +37,50 @@ const Post = ({post, user, isEdited}) => {
           <div className="post-time">{post.date_created.slice(11, 16)}</div>
         </div>
       </div>
-      <article data-cy="post" className='post-content' key={ post._id }>
+
+
+        <article data-cy="post" className='post-content' key={ post._id }>
         <AnimateOnChange>
           { updatedPost.content }
         </AnimateOnChange>
       </article>
 
+      <article data-cy="post" className='post-content' key={post._id}>{updatedPost.content}</article>
+
       <div className='post-footer'>
-        { user != post.user_id._id || 
-          <>
-            <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} />
-            <EditButton post={post} onUpdate={!isEditing} isEdited={isEdited} setUpdatedPost={setUpdatedPost}/>
-          </>
-        }
-        
-        <LikeButton post={post} setLike={setLiked} liked={liked} user={user} />
+        <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} />
+        <EditButton post={post} onUpdate={!isEditing} />
+        <LikeButton post={post} />
+        <CommentForm user={post.user_id} post={post} />
+       
+        <div className="comments-container">
+          
+         
+   
+      <h2>Comments ({comments.length})</h2>
+      <ul>
+  {Object.values(comments).map(comment => (
+    <li key={comment._id}>
+      <p>{comment.comment}</p>
+      <p>By {comment.user_id.firstName} {comment.user_id.surname[0]}</p>
+    </li>
+  ))}
+</ul>
+
+    
+
+
+{/* 
+          {setComments.map(comment => (
+            <div key={comment._id}>
+              <p>{comment.comment}</p>
+              <p>By {comment.user_id.firstName} {comment.user_id.surname[0]}</p>
+            </div>
+          ))} */}
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Post;

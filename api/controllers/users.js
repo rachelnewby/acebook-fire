@@ -56,11 +56,37 @@ const UsersController = {
       if (!user) {
         res.status(404).json({ message: 'User not found' });
       } else {
-        res.status(200).json({ email: user.email });
+        res.status(200).json({ firstName: user.firstName,
+          surname: user.surname,
+          email: user.email, 
+          bio: user.bio ,
+        friendsList: user.friendsList});
       }
     });
 
-  }
+  },
+  UpdateBio: async (req, res) => {
+    const { bio } = req.body;
+    const userId = req.user_id;
+  
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: userId },
+        { bio: bio },
+        { new: true }
+      );
+      
+      const token = await TokenGenerator.jsonwebtoken(userId);
+      
+      res.status(200).json({
+        message: 'Bio updated',
+        user: updatedUser,
+        token: token
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = UsersController;
