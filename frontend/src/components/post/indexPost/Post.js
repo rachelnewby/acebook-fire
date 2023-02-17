@@ -32,7 +32,8 @@ function Post({ post, user }) {
     <div className="post-container" style={{animation: animations.bounceIn}}>
       <div className='post-header'>
         <div className='post-profile-picture'><FaRegUser /></div>
-        <div className='post-name'>{post.user_id.firstName} {post.user_id.surname[0]}</div>
+        {/* <div className='post-name'>{post.user_id.firstName} {post.user_id.surname[0]}</div> */}
+        <div className='post-name'>{post.user_id} </div>
         <div className='post-date-time__container'>
           <div className='post-date'>{post.date_created.slice(0, 10)}</div>
           <div className="post-time">{post.date_created.slice(11, 16)}</div>
