@@ -11,8 +11,7 @@ const UsersController = {
         console.log('if error')
         return res.status(400).json({error: err})
       }
-      const token = await TokenGenerator.jsonwebtoken(req.user_id) // Added await
-      console.log("req.user_id", req.user_id)
+      const token = await TokenGenerator.jsonwebtoken(req.user_id)
       res.status(200).json({ users: users, token: token, loggedInUser: req.user_id });
     });
   },
@@ -36,7 +35,6 @@ const UsersController = {
     const bodyToken = req.body.token
     
     const currentUserId = JWT.verify(bodyToken, 'SUPER_SECRET')
-    console.log("this is the user id", currentUserId.user_id)
     try {
       await User.findOneAndUpdate({_id: currentUserId.user_id}, {$push: {friendsList: pfid}},
       { new: true
