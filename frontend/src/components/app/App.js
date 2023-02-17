@@ -10,6 +10,7 @@ import {
   useNavigate,
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
 import ProfilePage from '../profile/Profile';
 
@@ -25,6 +26,7 @@ const App = () => {
           <Route path='/signup' element={<SignUpForm navigate={ useNavigate() } />}/>
           <Route path='/users' element={<Community navigate={ useNavigate() } />}/>
           <Route path='/profile' element={<ProfilePage navigate={ useNavigate() } />}/>
+          <Route path='*' element={token ? <Navigate to="/posts" replace /> : <Navigate to="/login" replace />}/>
         </Routes>
       </div>
     );

@@ -12,7 +12,7 @@ const PostsController = {
       }
 
       const token = await TokenGenerator.jsonwebtoken(req.user_id)
-      res.status(200).json({ posts: posts, token: token, currentUser: req.user });
+      res.status(200).json({ posts: posts, token: token, currentUser: req.user_id });
     });
   },
   Like: async (req, res) => {
