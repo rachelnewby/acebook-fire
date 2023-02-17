@@ -19,6 +19,7 @@ const PotentialFriend = ({ potentialFriend, token }) => {
     // When a 201 is recieved it will log to the console that it was successful. Or that it wasn't if a 201 not recieved 
     if(response.status !== 201) {
       console.log("friend not updated sorry :(")
+    // Button is removed if you have sent a friend request so you can't add the same person more than once
     } else {
       setFriendRequest(true)
       console.log("Friend added")
@@ -27,6 +28,7 @@ const PotentialFriend = ({ potentialFriend, token }) => {
     }
   }
     if(friendRequest == false){
+      // If you have not sent them a friend request, show the other user's name and add button
       return(
         <div className="potential-friend">
           {/* ._id is unique identifier. First & surname passed through parent to child to be displayed via prop */}
@@ -34,6 +36,7 @@ const PotentialFriend = ({ potentialFriend, token }) => {
           <button className="add-friend-button" onClick={() => addFriend(potentialFriend._id, token)}>Add friend</button>
         </div>)
     } else {
+      // else if you have sent the friend request, the button is removed
       return (
         <div>
           <article className="friend-details" data-cy="post" key={ potentialFriend._id }> {potentialFriend.firstName} {potentialFriend.surname}</article>

@@ -28,31 +28,30 @@ const Community = ({ navigate }) => {
     }
   }, [token]);
 
+  // Gets the friends list of the logged in user and sets it in state
   useEffect(() => {
     if (userDetails) {
       setCurrentFriends(userDetails.friendsList);
     }
   }, [userDetails]);
 
+  // Takes all users and compares against current friends to only show users you are not already
+  // friends with
   const filteredPotentialFriends = useMemo(() => {
     const removeUserFromPotentialFriends = () => {
       setPotentialFriends((prevPotentialFriends) =>
         prevPotentialFriends.filter((potentialFriend) => potentialFriend._id !== loggedInUser)
       );
     };
-
+// Removes the logged in user from friends page so you can't add yourself
     if (potentialFriends.some((potentialFriend) => potentialFriend._id === loggedInUser)) {
       removeUserFromPotentialFriends();
     }
-
+// Returns the filtered list of potential friends
     return potentialFriends.filter((friendObj) => !currentFriends.includes(friendObj._id));
   }, [potentialFriends, currentFriends, loggedInUser]);
 
-  const logout = () => {
-    window.localStorage.removeItem('token');
-    navigate('/login');
-  };
-
+  // If the user has a token populates page with potential friend component
   if (token) {
     return (
       <div className="feed">
