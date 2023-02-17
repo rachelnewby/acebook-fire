@@ -4,26 +4,27 @@ import DeleteButtonPost from '../deleteButton/DeleteButtonPost';
 import EditButton from '../editButton/EditButtonPost';
 import LikeButton from '../likeButton/LikeButton';
 import { FaRegUser } from 'react-icons/fa';
+import { animations, AnimateOnChange } from 'react-animation'
 
-const Post = ({post}) => {
+const Post = ({post, user, isEdited}) => {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedPost, setUpdatedPost] = useState(post);
+  const [liked, setLiked] = useState(false);
+
 
   useEffect(() => {
     // Refresh the page after count reaches a certain value
-
+    setLiked(post.likes.includes(user));
     if (isEditing) {
       window.location.reload();
     }
   }, [isEditing]);
 
-  console.log(post);
-
   return isDeleted ? (
     <> </>
   ) : (
-    <div className="post-container">
+    <div className="post-container" style={{animation: animations.bounceIn}}>
       <div className='post-header'>
         <div className='post-profile-picture'><FaRegUser /></div>
         <div className='post-name'>{post.user_id.firstName} {post.user_id.surname[0]}</div>
@@ -32,12 +33,21 @@ const Post = ({post}) => {
           <div className="post-time">{post.date_created.slice(11, 16)}</div>
         </div>
       </div>
-      <article data-cy="post" className='post-content' key={ post._id }>{ updatedPost.content }</article>
+      <article data-cy="post" className='post-content' key={ post._id }>
+        <AnimateOnChange>
+          { updatedPost.content }
+        </AnimateOnChange>
+      </article>
 
       <div className='post-footer'>
-        <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} /> 
-        <EditButton post={post} onUpdate={!isEditing}/>
-        <LikeButton post={post} />
+        { user != post.user_id._id || 
+          <>
+            <DeleteButtonPost post={post} id={post._id} setIsDeleted={setIsDeleted} />
+            <EditButton post={post} onUpdate={!isEditing} isEdited={isEdited} setUpdatedPost={setUpdatedPost}/>
+          </>
+        }
+        
+        <LikeButton post={post} setLike={setLiked} liked={liked} user={user} />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@
   flex-direction: column;
   border-radius: 20px;
   position: relative;
+  animation-duration: 0.5s;
 }
 
 .post-header{
@@ -51,7 +52,6 @@
 
 .post-content{
   margin-top: 5px;
-  min-height: 50px;
   flex-grow: 1;
   word-break: break-all;
   padding: 5px;
@@ -82,4 +82,20 @@
 .footer-button:hover{
   font-size: 38px;
   transform: translate(2px, 2px);
+}
+
+@keyframes slide{
+  0%{
+    opacity: 0%;
+    transform: translateZ(-10rem);
+  }
+
+  50%{
+    transform: translateZ(-5rem);
+  }
+
+  100%{
+    opacity: 100%;
+    transform: translateZ(0rem);
+  }
 }
