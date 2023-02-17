@@ -56,9 +56,6 @@ const Community = ({ navigate }) => {
     return (
       <div className="feed">
         <h2 className="h2">Potential Friends</h2>
-        <button className="logoutButton" onClick={logout}>
-          Logout
-        </button>
         <div id="feed" role="feed">
           {filteredPotentialFriends.map((potentialFriend) => (
             <PotentialFriend potentialFriend={potentialFriend} key={potentialFriend._id} token={token} />
