@@ -2,6 +2,7 @@ import React from 'react';
 import './Profile.css';
 import  { useState, useEffect } from 'react';
 import Post from '../post/indexPost/Post';
+import BioForm from '../bio/bio';
 
 
 
@@ -13,7 +14,8 @@ import Post from '../post/indexPost/Post';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({});
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
+  const [bio, setBio] = useState("")
   
   const [token, setToken] = useState(window.localStorage.getItem("token"));
  
@@ -28,9 +30,9 @@ const ProfilePage = () => {
     .then(response => response.json())
     .then(user => {
      
-      //window.localStorage.setItem("token", data.token)
+      
       setUser(user)
-     // console.log(user)
+      console.log("user",user)
     })
    }
    if(token) {
@@ -49,7 +51,12 @@ const ProfilePage = () => {
   }
 }, []);
   
-  
+// const handleBioChange = (newBio) => {
+//   setBio(newBio);
+// }
+const updateBio = (newBio) => {
+  setUser((prevUser) => ({ ...prevUser, bio: newBio }));
+};
 
   
 
@@ -59,7 +66,13 @@ const ProfilePage = () => {
       <div className='user-info'>
         <p>Welcome to your profile, {user.firstName}</p>
         <p>Email: {user.email}</p>
-        <p>Bio: This is where your bio would appear if we didn't run out of time</p>
+        <p>Bio: <BioForm onUpdate={updateBio} /></p>
+         <p>Bio: {user.bio}</p>
+        {/* <div>
+           <textarea value={bio} onChange={handleBioChange} />
+           <button onClick={updateBio}>Update Bio</button>
+          
+        </div> */}
         </div>
         <div className='friend-list'>
           <h1>Friends </h1>
@@ -78,5 +91,6 @@ const ProfilePage = () => {
     </div>
   );
 };
+
 
 export default ProfilePage;

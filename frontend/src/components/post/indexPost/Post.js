@@ -13,7 +13,9 @@ function Post({ post }) {
   const [updatedPost, setUpdatedPost] = useState(post);
   const [comments, setComments] = useState([]);
 
-
+  const handleNewComment = (comment) => {
+    setComments([...comments, comment]);
+  };
 
   useEffect(() => {
     // Refresh the page after count reaches a certain value

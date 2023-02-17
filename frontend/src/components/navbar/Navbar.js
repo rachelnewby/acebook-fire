@@ -18,7 +18,7 @@ const Navbar = ({ navigate, signedIn }) => {
 
   return (
     <nav className="nav-container" data-cy="nav">
-      <div className='logo'><a href="/"><img className='logo-img' src="logo-blue.png" /></a></div>
+      <div className='logo'><a href="/posts"><img className='logo-img' src="logo-blue.png" /></a></div>
       <ul className="nav-list">
 
           { signedIn &&
