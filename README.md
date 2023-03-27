@@ -2,7 +2,7 @@
 
 In this project our team of 6 were given a partially written MERN stack with basic functionality already in existence. It covered the signup, login and logout functionality.
 
-The primary challenge was to familiarise ourselves with an unknown codebase and a tech stack we had very limited experience with. Once we had got an understanding of the code we had to improve and add to the code base, sticking to TDD and agile as we worked.
+The primary challenge was to familiarise ourselves with an unknown codebase and a tech stack we had very limited experience with. Once we had got an understanding of the code we had to improve and add to the code base, adhering to test-driven development and agile working practices.
 
 ### Contents
 
@@ -42,7 +42,7 @@ Once we all felt comfortable that we had a good understanding of our areas we ga
 
 As a team we found it very helpful to visually represent the structure of the code when knowledge sharing.
 
-![](./images/backend.png)
+![Diagram of how the existing backend codebase works](./diagrams/backend.png)
 
 ### Sprints
 
@@ -113,7 +113,7 @@ After scoping out our user stories we took the time to wireframe the frontend of
 
 Additionally, it helped plan what React components we would need to create and how they would interact with each other.
 
-![](./images/wireframes.png)
+![Diagram depicting wireframes](./diagrams/wireframes.png)
 
 ## Features
 
